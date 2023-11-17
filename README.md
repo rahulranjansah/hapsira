@@ -15,18 +15,18 @@
 [![poliastro_badge]](https://github.com/poliastro/poliastro)
 [![ci_badge]](https://circleci.com/gh/poliastro/poliastro/?branch=main)
 [![docs_badge]](https://docs.poliastro.space/en/latest/?badge=latest)
-[![coverage_badge]](https://codecov.io/github/poliastro/poliastro?branch=main) 
-[![pre_commit_badge]](https://results.pre-commit.ci/latest/github/poliastro/poliastro/main) 
-[![python_badge]](https://pypi.org/project/poliastro) 
-[![pypi_badge]](https://pypi.org/project/poliastro) 
-[![license_badge]](https://opensource.org/licenses/MIT) 
-[![doi_badge]](https://zenodo.org/badge/latestdoi/11178845) 
-[![astropy_badge]](https://zenodo.org/badge/latestdoi/11178845) 
-[![mailing_badge]](https://groups.io/g/poliastro-dev) 
-[![chat_badge]](http://chat.poliastro.space/) 
-[![backers_badge]](https://opencollective.com/poliastro/) 
-[![sponsors_badge]](https://opencollective.com/poliastro/) 
-[![binder_badge]](https://mybinder.org/v2/gh/poliastro/poliastro/main?labpath=index.ipynb) 
+[![coverage_badge]](https://codecov.io/github/poliastro/poliastro?branch=main)
+[![pre_commit_badge]](https://results.pre-commit.ci/latest/github/poliastro/poliastro/main)
+[![python_badge]](https://pypi.org/project/poliastro)
+[![pypi_badge]](https://pypi.org/project/poliastro)
+[![license_badge]](https://opensource.org/licenses/MIT)
+[![doi_badge]](https://zenodo.org/badge/latestdoi/11178845)
+[![astropy_badge]](https://zenodo.org/badge/latestdoi/11178845)
+[![mailing_badge]](https://groups.io/g/poliastro-dev)
+[![chat_badge]](http://chat.poliastro.space/)
+[![backers_badge]](https://opencollective.com/poliastro/)
+[![sponsors_badge]](https://opencollective.com/poliastro/)
+[![binder_badge]](https://mybinder.org/v2/gh/poliastro/poliastro/main?labpath=index.ipynb)
 [![code_badge]]()
 
 
@@ -111,19 +111,19 @@ poliastro is released under the MIT license, hence allowing commercial use of
 the library. Please refer to the [COPYING] file.
 
     The MIT License (MIT)
-    
+
     Copyright (c) 2012-2023 Juan Luis Cano Rodríguez, Jorge Martínez Garrido, and the poliastro development team
-    
+
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
     in the Software without restriction, including without limitation the rights
     to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
     copies of the Software, and to permit persons to whom the Software is
     furnished to do so, subject to the following conditions:
-    
+
     The above copyright notice and this permission notice shall be included in all
     copies or substantial portions of the Software.
-    
+
     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
     IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
     FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -164,7 +164,7 @@ money is used to renew the web domain and updating the documentation hosting
 subscription among others.
 
 If you would like to support poliastro, consider [becoming a backer] or
-[becoming a sponsor]. 
+[becoming a sponsor].
 
 **Thanks to all our backers!**
 
@@ -210,7 +210,7 @@ If you would like to support poliastro, consider [becoming a backer] or
 [Read the docs]: https://readthedocs.org
 [binder]: https://mybinder.org/
 [alternative installation methods]: https://docs.poliastro.space/en/stable/installation.html#alternative-installation-methods
-[issue tracker]: https://github.com/poliastro/poliastro/issues 
+[issue tracker]: https://github.com/poliastro/poliastro/issues
 [CONTRIBUTING.md]: https://github.com/poliastro/poliastro/blob/main/CONTRIBUTING.md
 [COPYING]: https://github.com/poliastro/poliastro/blob/main/COPYING
 [mailing list]: https://groups.io/g/poliastro-dev
@@ -240,9 +240,9 @@ If you would like to support poliastro, consider [becoming a backer] or
 [coverage_badge]:  https://img.shields.io/codecov/c/github/poliastro/poliastro.svg?logo=Codecov&logoColor=white "coverage badge"
 [pre_commit_badge]: https://results.pre-commit.ci/badge/github/poliastro/poliastro/main.svg "pre-commit badge"
 [license_badge]: https://img.shields.io/badge/license-MIT-blue.svg?logo=open%20source%20initiative&logoColor=white "license badge"
-[doi_badge]: https://zenodo.org/badge/11178845.svg "doi badge" 
+[doi_badge]: https://zenodo.org/badge/11178845.svg "doi badge"
 [astropy_badge]: http://img.shields.io/badge/powered%20by-AstroPy-orange.svg "astropy badge"
-[mailing_badge]: https://img.shields.io/badge/mailing%20list-groups.io-8cbcd1.svg 
+[mailing_badge]: https://img.shields.io/badge/mailing%20list-groups.io-8cbcd1.svg
 [chat_badge]: https://img.shields.io/matrix/poliastro:matrix.org.svg?logo=Matrix&logoColor=white "chat badge"
 [backers_badge]: https://img.shields.io/opencollective/backers/poliastro?logo=open%20collective&logoColor=white  "backers badge"
 [sponsors_badge]: https://img.shields.io/opencollective/sponsors/poliastro?logo=open%20collective&logoColor=white "sponsors badge"
