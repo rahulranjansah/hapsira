@@ -2,9 +2,9 @@ from astropy import constants as c, units as u
 from astropy.tests.helper import assert_quantity_allclose
 import pytest
 
-from poliastro.bodies import Earth
-from poliastro.core import iod
-from poliastro.iod import izzo, vallado
+from hapsira.bodies import Earth
+from hapsira.core import iod
+from hapsira.iod import izzo, vallado
 
 
 @pytest.mark.parametrize("lambert", [vallado.lambert, izzo.lambert])
@@ -119,9 +119,7 @@ def test_collinear_vectors_input(lambert):
 @pytest.mark.parametrize("M", [1, 2, 3])
 def test_minimum_time_of_flight_convergence(M):
     ll = -1
-    x_T_min_expected, T_min_expected = iod._compute_T_min(
-        ll, M, numiter=10, rtol=1e-8
-    )
+    x_T_min_expected, T_min_expected = iod._compute_T_min(ll, M, numiter=10, rtol=1e-8)
     y = iod._compute_y(x_T_min_expected, ll)
     T_min = iod._tof_equation_y(x_T_min_expected, y, 0.0, ll, M)
     assert T_min_expected == T_min
@@ -173,6 +171,6 @@ def test_vallado_not_implemented_multirev():
     with pytest.raises(NotImplementedError) as excinfo:
         vallado.lambert(k, r0, r, tof, M=1)
     assert (
-        "Multi-revolution scenario not supported for Vallado. See issue https://github.com/poliastro/poliastro/issues/858"
+        "Multi-revolution scenario not supported for Vallado. See issue https://github.com/hapsira/hapsira/issues/858"
         in excinfo.exconly()
     )

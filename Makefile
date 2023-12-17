@@ -1,20 +1,22 @@
-DOCKER_BASE_IMAGE := "poliastro:dev"
-DOCKER_CONTAINER_NAME := "poliastro-dev"
+DOCKER_BASE_IMAGE := "hapsira:dev"
+DOCKER_CONTAINER_NAME := "hapsira-dev"
 
+docs:
+	tox -e docs
 
 image: Dockerfile pyproject.toml
 	docker build \
-	  -t poliastro:dev \
-	  .
+	-t hapsira:dev \
+	.
 
 docker:
 	docker run \
-	  -it \
-	  --rm \
-	  --name ${DOCKER_CONTAINER_NAME} \
-	  --volume $(shell pwd):/code \
-	  --user $(shell id -u):$(shell id -g) \
-	  ${DOCKER_BASE_IMAGE} \
-          bash
+	-it \
+	--rm \
+	--name ${DOCKER_CONTAINER_NAME} \
+	--volume $(shell pwd):/code \
+	--user $(shell id -u):$(shell id -g) \
+	${DOCKER_BASE_IMAGE} \
+		bash
 
-.PHONY: docker image
+.PHONY: docs docker image

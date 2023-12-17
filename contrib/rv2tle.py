@@ -17,9 +17,9 @@ from astropy.time import Time
 import numpy as np
 from sgp4.api import SGP4_ERRORS, WGS84, Satrec
 
-from poliastro.bodies import Earth
-from poliastro.examples import iss
-from poliastro.twobody import Orbit, angles
+from hapsira.bodies import Earth
+from hapsira.examples import iss
+from hapsira.twobody import Orbit, angles
 
 
 def unitv(v):
@@ -121,9 +121,7 @@ def rvel(r, v):
         x3thm1 = 3 * theta2 - 1
         x1mth2 = 1 - theta2
         x7thm1 = 7 * theta2 - 1
-        r = (rk - 0.5 * temp1 * x1mth2 * cos2u) / (
-            1 - 1.5 * temp2 * betal * x3thm1
-        )
+        r = (rk - 0.5 * temp1 * x1mth2 * cos2u) / (1 - 1.5 * temp2 * betal * x3thm1)
         u = uk + 0.25 * temp2 * x7thm1 * sin2u
         xnodeo = xnodek - 1.5 * temp2 * cosio * sin2u
         xincl = xinck - 1.5 * temp2 * cosio * sinio * cos2u
@@ -283,7 +281,7 @@ def rv2el(rr, vv, epoch):
 if __name__ == "__main__":
     # Display some initial data
     print(f" Orbit: {iss}")
-    print(" State vector [poliastro]")
+    print(" State vector [hapsira]")
     print(f"     r = {iss.r}")
     print(f"     v = {iss.v}")
     print()
@@ -291,7 +289,7 @@ if __name__ == "__main__":
     # Reference epoch
     epoch = Time(iss.epoch, format="datetime", scale="utc")
 
-    # Store poliastro orbital elements (osculating)
+    # Store hapsira orbital elements (osculating)
     ecc_anomaly = angles.nu_to_E(iss.nu, iss.ecc)
     mean_anomaly = angles.E_to_M(ecc_anomaly, iss.ecc)
 
@@ -349,7 +347,7 @@ if __name__ == "__main__":
     print(f"     v = {sv.v}")
     print()
 
-    print("State vector differences [poliastro - rv2el]")
+    print("State vector differences [hapsira - rv2el]")
     print(f"    dr = {iss.r - sv.r}")
     print(f"    dv = {iss.v - sv.v}")
     print()

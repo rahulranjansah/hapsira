@@ -8,7 +8,7 @@
 ##   FILE DESCRIPTION:                                                      ##
 ##                                                                          ##
 ##   This file is a prototype file for a newly proposed "Relative Orbit"    ##
-##   object in poliastro. The class 'relative' is defined by 02x instances  ##
+##   object in hapsira. The class 'relative' is defined by 02x instances  ##
 ##   of the 'twobody' object - one chief, and one deputy spacecraft, and    ##
 ##   it takes in the classical elements from each of them. The class then   ##
 ##   automatically computes the states of relative motion by linearizing    ##
@@ -52,7 +52,7 @@
 ##############################################################################
 ##############################################################################
 
-# Import matplotlib (possibly change to plotly for poliastro?)
+# Import matplotlib (possibly change to plotly for hapsira?)
 # Import the relevant AstroPy libraries.
 from astropy import units as u
 
@@ -64,9 +64,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # Import the relevant PoliAstro libraries
-from poliastro.bodies import Earth
-from poliastro.twobody import Orbit
-from poliastro.twobody.angles import E_to_M, nu_to_E
+from hapsira.bodies import Earth
+from hapsira.twobody import Orbit
+from hapsira.twobody.angles import E_to_M, nu_to_E
 
 # Below is the definition of the relative orbits class (RelativeOrb).
 # For the actual example script of how to use the class, scroll to the bottom!
@@ -84,7 +84,7 @@ from poliastro.twobody.angles import E_to_M, nu_to_E
 # Let us define a relative orbits class that can be defined by two orbits!
 class RelativeOrb:
     def __init__(self, satC, satD):
-        """When this class is initialized, it requires two poliastro twobody
+        """When this class is initialized, it requires two hapsira twobody
         objects: a chief orbiter (satC) and a deputy orbiter (satD). After
         initialisation, a number of computations must be made.
 
@@ -251,9 +251,7 @@ class RelativeOrb:
         # need perform the 313 Euler angle rotation in the following sequence:
         # Right Angle of Ascending Node -> Inclination -> Argument of Latitude.
         # Now, let us get us the DCM that converts to the hill-frame.
-        DCM_HN = np.matmul(
-            self._dcmZ(w), np.matmul(self._dcmX(i), self._dcmZ(R))
-        )
+        DCM_HN = np.matmul(self._dcmZ(w), np.matmul(self._dcmX(i), self._dcmZ(R)))
 
         # Notice that the hill frame computation does not include a rotation
         # of the true anomaly, and that's because the true anomaly has already
@@ -273,9 +271,7 @@ class RelativeOrb:
         )
         vel = np.matmul(
             DCM_NH,
-            np.array(
-                [vel_X.to_value(u.km / u.s), vel_Y.to_value(u.km / u.s), 0.0]
-            ),
+            np.array([vel_X.to_value(u.km / u.s), vel_Y.to_value(u.km / u.s), 0.0]),
         )
 
         # Finally, let us not forget to compute the true anomaly.

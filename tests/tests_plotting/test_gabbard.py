@@ -2,10 +2,10 @@ from astropy import units as u
 from matplotlib import pyplot as plt
 import pytest
 
-from poliastro.bodies import Earth
-from poliastro.examples import iss
-from poliastro.plotting.gabbard import GabbardPlotter
-from poliastro.twobody import Orbit
+from hapsira.bodies import Earth
+from hapsira.examples import iss
+from hapsira.plotting.gabbard import GabbardPlotter
+from hapsira.twobody import Orbit
 
 
 def test_axes_labels_and_title():

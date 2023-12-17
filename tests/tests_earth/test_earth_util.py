@@ -2,7 +2,7 @@ from astropy import units as u
 from astropy.tests.helper import assert_quantity_allclose
 from astropy.time import Time
 
-from poliastro.earth.util import get_local_sidereal_time, raan_from_ltan
+from hapsira.earth.util import get_local_sidereal_time, raan_from_ltan
 
 
 def test_raan_from_ltan_metopb():
@@ -21,9 +21,7 @@ def test_raan_from_ltan_metopb():
 
     raan = raan_from_ltan(epoch, ltan)
 
-    assert_quantity_allclose(
-        raan.wrap_at(360 * u.deg), expected_raan, atol=0.3 * u.deg
-    )
+    assert_quantity_allclose(raan.wrap_at(360 * u.deg), expected_raan, atol=0.3 * u.deg)
 
 
 def test_raan_from_ltan_sentinel5p():
@@ -41,9 +39,7 @@ def test_raan_from_ltan_sentinel5p():
 
     raan = raan_from_ltan(epoch, ltan)
 
-    assert_quantity_allclose(
-        raan.wrap_at(360 * u.deg), expected_raan, atol=0.3 * u.deg
-    )
+    assert_quantity_allclose(raan.wrap_at(360 * u.deg), expected_raan, atol=0.3 * u.deg)
 
 
 def test_local_sidereal_time():

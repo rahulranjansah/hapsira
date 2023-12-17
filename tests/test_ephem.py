@@ -12,19 +12,17 @@ from astropy.time import Time
 import numpy as np
 import pytest
 
-from poliastro.bodies import Earth, Venus
-from poliastro.ephem import Ephem, SincInterpolator, SplineInterpolator
-from poliastro.frames import Planes
-from poliastro.twobody.orbit import Orbit
-from poliastro.warnings import TimeScaleWarning
+from hapsira.bodies import Earth, Venus
+from hapsira.ephem import Ephem, SincInterpolator, SplineInterpolator
+from hapsira.frames import Planes
+from hapsira.twobody.orbit import Orbit
+from hapsira.warnings import TimeScaleWarning
 
 AVAILABLE_INTERPOLATORS = [SincInterpolator(), SplineInterpolator()]
 AVAILABLE_PLANES = Planes.__members__.values()
 
 
-def assert_coordinates_allclose(
-    actual, desired, rtol=1e-7, atol_scale=None, **kwargs
-):
+def assert_coordinates_allclose(actual, desired, rtol=1e-7, atol_scale=None, **kwargs):
     if atol_scale is None:
         atol_scale = 0
 
@@ -83,8 +81,7 @@ def test_ephem_fails_if_dimensions_are_not_correct(epochs, coordinates):
     with pytest.raises(ValueError) as excinfo:
         Ephem(epochs[0], coordinates, unused_plane)
     assert (
-        "Coordinates and epochs must have dimension 1, got 0 and 1"
-        in excinfo.exconly()
+        "Coordinates and epochs must have dimension 1, got 0 and 1" in excinfo.exconly()
     )
 
 
@@ -142,18 +139,14 @@ def test_ephem_sample_scalar_epoch_and_coordinates_returns_exactly_same_input(
 
 
 @pytest.mark.parametrize("interpolator", AVAILABLE_INTERPOLATORS)
-def test_ephem_sample_same_epochs_returns_same_input(
-    epochs, coordinates, interpolator
-):
+def test_ephem_sample_same_epochs_returns_same_input(epochs, coordinates, interpolator):
     unused_plane = Planes.EARTH_EQUATOR
     ephem = Ephem(coordinates, epochs, unused_plane)
 
     result_coordinates = ephem.sample(epochs, interpolator=interpolator)
 
     # TODO: Should it return exactly the same?
-    assert_coordinates_allclose(
-        result_coordinates, coordinates, atol_scale=1e-17
-    )
+    assert_coordinates_allclose(result_coordinates, coordinates, atol_scale=1e-17)
 
 
 @pytest.mark.parametrize("interpolator", AVAILABLE_INTERPOLATORS)
@@ -166,9 +159,7 @@ def test_ephem_sample_existing_epochs_returns_corresponding_input(
     result_coordinates = ephem.sample(epochs[::2], interpolator=interpolator)
 
     # Exactly the same
-    assert_coordinates_allclose(
-        result_coordinates, coordinates[::2], atol_scale=1e-17
-    )
+    assert_coordinates_allclose(result_coordinates, coordinates[::2], atol_scale=1e-17)
 
 
 def test_rv_no_parameters_returns_input_vectors(coordinates, epochs):
@@ -205,9 +196,7 @@ def test_rv_scalar_epoch_returns_scalar_vectors(coordinates, epochs):
         (Planes.EARTH_ECLIPTIC, BarycentricMeanEcliptic, 1e-5),
     ],
 )
-def test_ephem_from_body_has_expected_properties(
-    interpolator, plane, FrameClass, rtol
-):
+def test_ephem_from_body_has_expected_properties(interpolator, plane, FrameClass, rtol):
     epochs = Time(
         [
             "2020-03-01 12:00:00",
@@ -267,7 +256,7 @@ def test_from_body_scalar_epoch_uses_reshaped_epochs():
     assert ephem.epochs == expected_epochs
 
 
-@mock.patch("poliastro.ephem.Horizons")
+@mock.patch("hapsira.ephem.Horizons")
 @pytest.mark.parametrize(
     "attractor,location_str",
     [(None, "@ssb"), (Earth, "500@399"), (Venus, "500@299")],
@@ -294,9 +283,7 @@ def test_ephem_from_horizons_calls_horizons_with_correct_parameters(
     expected_coordinates = CartesianRepresentation(
         [(1, 0, 0)] * u.au,
         xyz_axis=1,
-        differentials=CartesianDifferential(
-            [(0, 1, 0)] * (u.au / u.day), xyz_axis=1
-        ),
+        differentials=CartesianDifferential([(0, 1, 0)] * (u.au / u.day), xyz_axis=1),
     )
 
     ephem = Ephem.from_horizons(
@@ -320,7 +307,7 @@ def test_ephem_from_horizons_calls_horizons_with_correct_parameters(
     assert_coordinates_allclose(coordinates, expected_coordinates)
 
 
-@mock.patch("poliastro.ephem.Horizons")
+@mock.patch("hapsira.ephem.Horizons")
 def test_from_horizons_scalar_epoch_uses_reshaped_epochs(horizons_mock):
     unused_name = "Strange Object"
     unused_id_type = "id_type"

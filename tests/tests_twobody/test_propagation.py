@@ -7,14 +7,14 @@ from numpy.testing import assert_allclose
 import pytest
 from pytest import approx
 
-from poliastro.bodies import Earth, Moon, Sun
-from poliastro.constants import J2000
-from poliastro.core.elements import rv2coe
-from poliastro.core.propagation import func_twobody
-from poliastro.examples import iss
-from poliastro.frames import Planes
-from poliastro.twobody import Orbit
-from poliastro.twobody.propagation import (
+from hapsira.bodies import Earth, Moon, Sun
+from hapsira.constants import J2000
+from hapsira.core.elements import rv2coe
+from hapsira.core.propagation import func_twobody
+from hapsira.examples import iss
+from hapsira.frames import Planes
+from hapsira.twobody import Orbit
+from hapsira.twobody.propagation import (
     ALL_PROPAGATORS,
     ELLIPTIC_PROPAGATORS,
     HYPERBOLIC_PROPAGATORS,
@@ -27,7 +27,7 @@ from poliastro.twobody.propagation import (
     RecseriesPropagator,
     ValladoPropagator,
 )
-from poliastro.util import norm
+from hapsira.util import norm
 
 
 @pytest.fixture(scope="module")
@@ -150,9 +150,7 @@ def test_propagating_to_certain_nu_is_correct():
     for nu in np.random.uniform(low=-np.pi, high=np.pi, size=10):
         elliptic = elliptic.propagate_to_anomaly(nu * u.rad)
         r, _ = elliptic.rv()
-        assert_quantity_allclose(
-            norm(r), a * (1.0 - ecc**2) / (1 + ecc * np.cos(nu))
-        )
+        assert_quantity_allclose(norm(r), a * (1.0 - ecc**2) / (1 + ecc * np.cos(nu)))
 
 
 def test_propagate_to_anomaly_in_the_past_fails_for_open_orbits():
@@ -160,9 +158,7 @@ def test_propagate_to_anomaly_in_the_past_fails_for_open_orbits():
     v0 = [0, 15, 0] * u.km / u.s
     orb = Orbit.from_vectors(Earth, r0, v0)
 
-    with pytest.raises(
-        ValueError, match="True anomaly -0.02 rad not reachable"
-    ):
+    with pytest.raises(ValueError, match="True anomaly -0.02 rad not reachable"):
         orb.propagate_to_anomaly(orb.nu - 1 * u.deg)
 
 
@@ -266,9 +262,7 @@ def test_apply_zero_maneuver_returns_equal_state():
     dv = [0, 0, 0] * u.km / u.s
     orbit_new = ss.apply_maneuver([(dt, dv)])
     assert_allclose(orbit_new.r.to(u.km).value, ss.r.to(u.km).value)
-    assert_allclose(
-        orbit_new.v.to(u.km / u.s).value, ss.v.to(u.km / u.s).value
-    )
+    assert_allclose(orbit_new.v.to(u.km / u.s).value, ss.v.to(u.km / u.s).value)
 
 
 def test_cowell_propagation_with_zero_acceleration_equals_kepler():
@@ -351,7 +345,7 @@ def test_propagate_to_date_has_proper_epoch():
 )
 def test_propagate_long_times_keeps_geometry(method):
     # TODO: Extend to other propagators?
-    # See https://github.com/poliastro/poliastro/issues/265
+    # See https://github.com/hapsira/hapsira/issues/265
     time_of_flight = 100 * u.year
 
     res = iss.propagate(time_of_flight, method=method)
@@ -417,17 +411,13 @@ def with_units(draw, elements, unit):
         unit=u.year,
     )
 )
-@pytest.mark.parametrize(
-    "method", [FarnocchiaPropagator(), ValladoPropagator()]
-)
+@pytest.mark.parametrize("method", [FarnocchiaPropagator(), ValladoPropagator()])
 def test_long_propagation_preserves_orbit_elements(tof, method, halley):
     expected_slow_classical = halley.classical()[:-1]
 
     slow_classical = halley.propagate(tof, method=method).classical()[:-1]
 
-    for element, expected_element in zip(
-        slow_classical, expected_slow_classical
-    ):
+    for element, expected_element in zip(slow_classical, expected_slow_classical):
         assert_quantity_allclose(element, expected_element)
 
 
@@ -444,7 +434,7 @@ def test_propagation_sets_proper_epoch():
 
 
 def test_sample_around_moon_works():
-    # See https://github.com/poliastro/poliastro/issues/649
+    # See https://github.com/hapsira/hapsira/issues/649
     orbit = Orbit.circular(Moon, 100 << u.km)
 
     coords = orbit.sample(10)
@@ -454,7 +444,7 @@ def test_sample_around_moon_works():
 
 
 def test_propagate_around_moon_works():
-    # See https://github.com/poliastro/poliastro/issues/649
+    # See https://github.com/hapsira/hapsira/issues/649
     orbit = Orbit.circular(Moon, 100 << u.km)
     new_orbit = orbit.propagate(1 << u.h)
 

@@ -79,6 +79,7 @@ coverage.xml
 
 # Sphinx documentation
 docs/_build/
+docs/source/autoapi/hapsira/
 
 # PyBuilder
 target/
@@ -127,6 +128,9 @@ dmypy.json
 .idea
 .cache
 .venv
+env*/
 
 # General
 .DS_Store
+
+todo.md

@@ -2,8 +2,8 @@ from astropy import units as u
 from astropy.tests.helper import assert_quantity_allclose
 import pytest
 
-from poliastro.bodies import Earth
-from poliastro.sensors import (
+from hapsira.bodies import Earth
+from hapsira.sensors import (
     ground_range_diff_at_azimuth,
     min_and_max_ground_range,
 )
@@ -33,9 +33,7 @@ def test_max_and_min_ground_range(
     altitude, fov, boresight, expected_lat_lon_max, expected_lat_lon_min
 ):
     R = Earth.R.to(u.km)
-    lat_lon_min, lat_lon_max = min_and_max_ground_range(
-        altitude, fov, boresight, R
-    )
+    lat_lon_min, lat_lon_max = min_and_max_ground_range(altitude, fov, boresight, R)
     assert_quantity_allclose(lat_lon_max, expected_lat_lon_max, rtol=1e-4)
     assert_quantity_allclose(lat_lon_min, expected_lat_lon_min, rtol=1e-4)
 
@@ -72,9 +70,7 @@ def test_ground_range_diff_at_azimuth(
     ground_range_diff, target_lat, target_lon = ground_range_diff_at_azimuth(
         altitude, fov, boresight, azimuth, nadir_lat, nadir_lon, R
     )
-    assert_quantity_allclose(
-        ground_range_diff, expected_ground_range_diff, rtol=1e-5
-    )
+    assert_quantity_allclose(ground_range_diff, expected_ground_range_diff, rtol=1e-5)
     assert_quantity_allclose(target_lat, expected_target_lat, rtol=1e-6)
     assert_quantity_allclose(target_lon, expected_target_lon, rtol=1e-6)
 

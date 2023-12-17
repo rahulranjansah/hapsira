@@ -1,5 +1,36 @@
 # What's new
 
+## hapsira 0.18.0 - 2023-12-XX
+
+This release is a rebranded, but virtually identical fork of `poliastro`, `main` branch, as of the date of it being archived, October 14 2023. All noteworthy changes listed here were merged into `poliastro` after its last official release, `0.17.0`.
+
+- FEATURE: New plotters architecture with backend support, see [poliastro #1545](https://github.com/poliastro/poliastro/pull/1545)
+- FEATURE: Python 3.11 support, CI tests enabled and passing, see [poliastro #1590](https://github.com/poliastro/poliastro/pull/1590)
+- FEATURE: Added `cr3bp_char_quant` and its tests, see [poliastro #1570](https://github.com/poliastro/poliastro/pull/1570)
+- FEATURE: Update_1_cr3bp_dj, see [poliastro #1490](https://github.com/poliastro/poliastro/pull/1490)
+- FEATURE: Less strict version requirements on dependencies
+- FEATURE: Added GM of various moons and mean distances of multiple systems, see [poliastro #1567](https://github.com/poliastro/poliastro/pull/1567)
+- DOCS: Add offline-friendly formats to Read the Docs, see [poliastro #1549](https://github.com/poliastro/poliastro/pull/1549)
+- DOCS: Modernize `README.md`, see [poliastro #1543](https://github.com/poliastro/poliastro/pull/1543)
+- FIX: Docstring for hyperbolic to mean anomaly, see [poliastro #1608](https://github.com/poliastro/poliastro/pull/1608)
+- FIX: `Orbit.to_ephem` producing incorrect ephemeris time, see [poliastro #1583](https://github.com/poliastro/poliastro/pull/1583)
+- FIX: Update `change_ecc_inc.py` to allow for incl. reduction, see [poliastro #1579](https://github.com/poliastro/poliastro/pull/1579)
+- FIX: Unit of h_vec in cross product calculation, see [poliastro #1576](https://github.com/poliastro/poliastro/pull/1576)
+- FIX: Github repo language classification, see [poliastro #1571](https://github.com/poliastro/poliastro/pull/1571)
+- FIX: Add missing test dependency `tox`, see [poliastro #1555](https://github.com/poliastro/poliastro/pull/1555)
+- FIX: `pylint#2910` via workaround, ignore not an iterable warning on `numba.prange`, see [poliastro #1553](https://github.com/poliastro/poliastro/pull/1553)
+- FIX: Pylint invalid-all-object / E0604 in propagators, see [poliastro #1552](https://github.com/poliastro/poliastro/pull/1552)
+- FIX: Remove weird duplicated paragraph from changelog, see [poliastro #1551](https://github.com/poliastro/poliastro/pull/1551)
+- FIX: Spheroid location, see [poliastro #1547](https://github.com/poliastro/poliastro/pull/1547)
+- DEV: Remove upper bound on requires-python, see [poliastro #1588](https://github.com/poliastro/poliastro/pull/1588)
+- DEV: Use `numpy.testing.assert_allclose` with small relative tolerance, see [poliastro #1587](https://github.com/poliastro/poliastro/pull/1587)
+- DEV: Use Read the Docs action v1, see [poliastro #1566](https://github.com/poliastro/poliastro/pull/1566)
+- DEV: Remove twobody decorators, see [poliastro #1557](https://github.com/poliastro/poliastro/pull/1557)
+- DEV: Refactor build ephem interpolant, see [poliastro #1548](https://github.com/poliastro/poliastro/pull/1548)
+- DEV: `ss_*` to `orb_*`, see [poliastro #1541](https://github.com/poliastro/poliastro/pull/1541) and [poliastro #1542](https://github.com/poliastro/poliastro/pull/1542)
+- DEV: Rename notebooks to `.myst.md`, see [poliastro #1540](https://github.com/poliastro/poliastro/pull/1540)
+- DEV: Black code formatting
+
 ## poliastro 0.17.0 - 2022-07-10
 
 ### Highlights

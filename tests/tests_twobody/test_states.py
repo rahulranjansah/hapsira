@@ -3,8 +3,8 @@ from astropy.tests.helper import assert_quantity_allclose
 import numpy as np
 import pytest
 
-from poliastro.bodies import Earth, Sun
-from poliastro.twobody.states import ClassicalState, RVState
+from hapsira.bodies import Earth, Sun
+from hapsira.twobody.states import ClassicalState, RVState
 
 
 def test_state_has_attractor_given_in_constructor():
@@ -23,9 +23,7 @@ def test_classical_state_has_elements_given_in_constructor():
     raan = 49.562 * u.deg
     argp = 286.537 * u.deg
     nu = 23.33 * u.deg
-    ss = ClassicalState(
-        Sun, (a * (1 - ecc**2), ecc, inc, raan, argp, nu), None
-    )
+    ss = ClassicalState(Sun, (a * (1 - ecc**2), ecc, inc, raan, argp, nu), None)
     assert ss.p == a * (1 - ecc**2)
     assert ss.ecc == ecc
     assert ss.inc == inc
@@ -72,9 +70,7 @@ def test_coe_to_mee_raises_singularity_error_orbit_equatorial_and_retrograde():
     argp = 286.537 * u.deg
     nu = 23.33 * u.deg
 
-    ss = ClassicalState(
-        Sun, (a * (1 - ecc**2), ecc, inc, raan, argp, nu), None
-    )
+    ss = ClassicalState(Sun, (a * (1 - ecc**2), ecc, inc, raan, argp, nu), None)
     with pytest.raises(ValueError) as excinfo:
         ss.to_equinoctial()
     assert (

@@ -2,7 +2,7 @@ from astropy import units as u
 from astropy.tests.helper import assert_quantity_allclose
 import pytest
 
-from poliastro.bodies import (
+from hapsira.bodies import (
     Earth,
     Jupiter,
     Mars,
@@ -12,7 +12,7 @@ from poliastro.bodies import (
     Uranus,
     Venus,
 )
-from poliastro.threebody.soi import hill_radius, laplace_radius
+from hapsira.threebody.soi import hill_radius, laplace_radius
 
 
 @pytest.mark.parametrize(
@@ -38,9 +38,7 @@ def test_laplace_radius(body, expected_r_SOI):
 @pytest.mark.parametrize(
     "body, expected_r_SOI",
     [
-        pytest.param(
-            Mercury, 2.21e8 * u.m, marks=pytest.mark.xfail
-        ),  # Chebotarev
+        pytest.param(Mercury, 2.21e8 * u.m, marks=pytest.mark.xfail),  # Chebotarev
         (Mercury, 1.75e8 * u.m),  # Our result
         (Venus, 1.03e9 * u.m),
         (Earth, 1.49e9 * u.m),

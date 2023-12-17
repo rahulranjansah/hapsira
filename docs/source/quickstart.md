@@ -3,12 +3,9 @@
 
 ## Defining the orbit: {{ Orbit }} objects
 
-The core of poliastro are the {{ Orbit }} objects
-inside the {py:class}`poliastro.twobody` module. They store all the required
-information to define an orbit:
+The core of `hapsira` are the {{ Orbit }} objects inside the {py:class}`hapsira.twobody` module. They store all the required information to define an orbit:
 
-- The body acting as the central body of the orbit, for example the
-  Earth.
+- The body acting as the central body of the orbit, for example the Earth.
 - The position and velocity vectors or the orbital elements.
 - The time at which the orbit is defined.
 
@@ -17,15 +14,13 @@ First of all, you have to import the relevant modules and classes:
 ```python
 from astropy import units as u
 
-from poliastro.bodies import Earth, Mars, Sun
-from poliastro.twobody import Orbit
+from hapsira.bodies import Earth, Mars, Sun
+from hapsira.twobody import Orbit
 ```
 
 ## From position and velocity
 
-There are several methods available to create {{ Orbit }} objects.
-For example, if you have the position and velocity vectors you can use
-{py:meth}`~poliastro.twobody.orbit.scalar.Orbit.from_vectors`:
+There are several methods available to create {{ Orbit }} objects. For example, if you have the position and velocity vectors you can use {py:meth}`~hapsira.twobody.orbit.scalar.Orbit.from_vectors`:
 
 ```python
 # Data from Curtis, example 4.3
@@ -44,7 +39,7 @@ And that's it! Notice a couple of things:
 - If you display the orbit you just created, you get a string with the
   radius of pericenter, radius of apocenter, inclination, reference
   frame and attractor:
-  ```python    
+  ```python
   >>> orb
   7283 x 10293 km x 153.2 deg (GCRS) orbit around Earth (♁) at epoch J2000.000 (TT)
   ```
@@ -58,7 +53,7 @@ And that's it! Notice a couple of things:
   ```
 
 - The reference frame of the orbit will be one pseudo-inertial frame around the attractor.
-  You can retrieve it using the {py:attr}`~poliastro.twobody.orbit.scalar.Orbit.frame` property:
+  You can retrieve it using the {py:attr}`~hapsira.twobody.orbit.scalar.Orbit.frame` property:
   ```python
   >>> orb.get_frame()
   <GCRS Frame (obstime=J2000.000, obsgeoloc=(0., 0., 0.) m, obsgeovel=(0., 0., 0.) m / s)>
@@ -74,8 +69,7 @@ alt: Plot of the orbit
 ---
 ```
 
-If you're working on interactive mode (for example, using JupyterLab)
-you can immediately plot the current orbit:
+If you're working on interactive mode (for example, using JupyterLab) you can immediately plot the current orbit:
 
     orb.plot()
 
@@ -88,18 +82,12 @@ This plot is made in the so called *perifocal frame*, which means:
 The dotted line represents the *osculating orbit*: the instantaneous Keplerian orbit at that point. This is relevant in the context of perturbations, when the object shall deviate from its Keplerian orbit.
 
 ```{note}
-This visualization uses Plotly under interactive environments like Jupyter
-Notebook or Jupyter Lab while it switches to Matplotlib otherwise. Nevertheless,
-you can select the drawing backend. Check out the
-{py:class}`poliastro.plotting.orbit.OrbitPlotter` documentation for more
-information. 
+This visualization uses Plotly under interactive environments like Jupyter Notebook or Jupyter Lab while it switches to Matplotlib otherwise. Nevertheless, you can select the drawing backend. Check out the {py:class}`hapsira.plotting.orbit.OrbitPlotter` documentation for more information.
 ```
 
 ## From classical orbital elements
 
-You can also define an {{ Orbit }} using a set of six parameters called **orbital elements**.
-Although there are several of these element sets, each one with its advantages and drawbacks,
-right now poliastro supports the *classical orbital elements*:
+You can also define an {{ Orbit }} using a set of six parameters called **orbital elements**. Although there are several of these element sets, each one with its advantages and drawbacks, right now hapsira supports the *classical orbital elements*:
 
 - Semimajor axis $(a)$.
 - Eccentricity $(e)$.
@@ -108,8 +96,7 @@ right now poliastro supports the *classical orbital elements*:
 - Argument of pericenter $(\omega)$.
 - True anomaly $(\nu)$.
 
-In this case, you'd use the method
-{py:meth}`~poliastro.twobody.orbit.Orbit.from_classical`:
+In this case, you'd use the method {py:meth}`~hapsira.twobody.orbit.Orbit.from_classical`:
 
 ```python
 # Data for Mars at J2000 from JPL HORIZONS
@@ -123,8 +110,7 @@ nu = 23.33 << u.deg
 orb = Orbit.from_classical(Sun, a, ecc, inc, raan, argp, nu)
 ```
 
-Notice that whether you create an {{ Orbit }} from $(r)$ and $(v)$ or from
-elements you can access many mathematical properties of the orbit:
+Notice that whether you create an {{ Orbit }} from $(r)$ and $(v)$ or from elements you can access many mathematical properties of the orbit:
 ```python
 >>> orb.period.to(u.day)
 <Quantity 686.9713888628166 d>
@@ -136,14 +122,12 @@ To see a complete list of properties, check out the {{ Orbit }} class on the API
 
 ## Moving forward in time: propagation
 
-Now that you have defined an orbit, you might be interested in computing
-how is it going to evolve in the future. In the context of orbital mechanics,
-this process is known as **propagation**.
+Now that you have defined an orbit, you might be interested in computing how is it going to evolve in the future. In the context of orbital mechanics, this process is known as **propagation**.
 
 For example, start by importing an example orbit from the International Space Station:
 
-```python   
->>> from poliastro.examples import iss
+```python
+>>> from hapsira.examples import iss
 >>> iss
 6772 x 6790 km x 51.6 deg (GCRS) orbit around Earth (♁)
 >>> iss.epoch
@@ -154,8 +138,7 @@ For example, start by importing an example orbit from the International Space St
 <Quantity 3.887010576192155 deg / min>
 ```
 
-Using the {py:meth}`~poliastro.twobody.orbit.scalar.Orbit.propagate` method
-you can now retrieve the position of the ISS after some time:
+Using the {py:meth}`~hapsira.twobody.orbit.scalar.Orbit.propagate` method you can now retrieve the position of the ISS after some time:
 
 ```python
 >>> iss_30m = iss.propagate(30 << u.min)
@@ -165,19 +148,15 @@ you can now retrieve the position of the ISS after some time:
 <Quantity 163.1409357544868 deg>
 ```
 
-To explore different propagation algorithms, check out the
-{py:mod}`poliastro.twobody.propagation` module.
+To explore different propagation algorithms, check out the {py:mod}`hapsira.twobody.propagation` module.
 
-## Studying trajectories: {py:class}`~poliastro.ephem.Ephem` objects
+## Studying trajectories: {py:class}`~hapsira.ephem.Ephem` objects
 
-The `propagate` method gives you the final orbit at the epoch you designated.
-To retrieve the whole trajectory instead, you can use
-{py:meth}`poliastro.twobody.orbit.scalar.Orbit.to_ephem`, which returns an
-{{ Ephem }} instance:
+The `propagate` method gives you the final orbit at the epoch you designated. To retrieve the whole trajectory instead, you can use {py:meth}`hapsira.twobody.orbit.scalar.Orbit.to_ephem`, which returns an {{ Ephem }} instance:
 
 ```python
-from poliastro.twobody.sampling import EpochsArray, TrueAnomalyBounds, EpochBounds
-from poliastro.util import time_range
+from hapsira.twobody.sampling import EpochsArray, TrueAnomalyBounds, EpochBounds
+from hapsira.util import time_range
 
 start_date = Time("2022-07-11 05:05", scale="utc")
 end_date = Time("2022-07-11 07:05", scale="utc")
@@ -195,8 +174,7 @@ ephem3 = iss.to_ephem(strategy=TrueAnomalyBounds(min_nu=0 << u.deg, max_nu=180 <
 ephem4 = iss.to_ephem(strategy=EpochBounds(min_epoch=start_date, max_epoch=end_date))
 ```
 
-`Ephem` objects contain the coordinates of an object sampled at specific times.
-You can access both:
+`Ephem` objects contain the coordinates of an object sampled at specific times. You can access both:
 
 ```python
 >>> ephem1.epochs[:3]
@@ -212,15 +190,13 @@ You can access both:
 
 ## Studying non-keplerian orbits: perturbations
 
-Apart from the Keplerian propagators, poliastro also allows you to
-define custom perturbation accelerations to study non Keplerian orbits,
-thanks to Cowell's method:
+Apart from the Keplerian propagators, hapsira also allows you to define custom perturbation accelerations to study non Keplerian orbits, thanks to Cowell's method:
 
 ```python
 >>> from numba import njit
 >>> import numpy as np
->>> from poliastro.core.propagation import func_twobody
->>> from poliastro.twobody.propagation import CowellPropagator
+>>> from hapsira.core.propagation import func_twobody
+>>> from hapsira.twobody.propagation import CowellPropagator
 >>> r0 = [-2384.46, 5729.01, 3050.46] << u.km
 >>> v0 = [-7.36138, -2.98997, 1.64354] << (u.km / u.s)
 >>> initial = Orbit.from_vectors(Earth, r0, v0)
@@ -241,11 +217,10 @@ thanks to Cowell's method:
 18255 x 21848 km x 28.0 deg (GCRS) orbit around Earth (♁) at epoch J2000.008 (TT)
 ```
 
-Some natural perturbations are available in poliastro to be used
-directly in this way. For instance, to examine the effect of J2 perturbation:
+Some natural perturbations are available in hapsira to be used directly in this way. For instance, to examine the effect of J2 perturbation:
 
 ```python
->>> from poliastro.core.perturbations import J2_perturbation
+>>> from hapsira.core.perturbations import J2_perturbation
 >>> tofs = [48.0] << u.h
 >>> def f(t0, u_, k):
 ...     du_kep = func_twobody(t0, u_, k)
@@ -269,9 +244,7 @@ The J2 perturbation changes the orbit parameters (from Curtis example 12.2):
 
 ## Studying artificial perturbations: thrust
 
-In addition to natural perturbations, poliastro also has built-in
-artificial perturbations (thrust guidance laws) aimed at intentional change of some
-orbital elements. For example, to simultaneously change eccentricity and inclination:
+In addition to natural perturbations, hapsira also has built-in artificial perturbations (thrust guidance laws) aimed at intentional change of some orbital elements. For example, to simultaneously change eccentricity and inclination:
 
 ```python
 >>> ecc_0, ecc_f = [0.4, 0.0] << u.one
@@ -310,22 +283,16 @@ The thrust changes orbit parameters as desired (within errors):
 (<Quantity 0.34719734 rad>, <Quantity 0.00894513>)
 ```
 
-For more available thrust guidance laws options, see the
-{py:mod}`poliastro.twobody.thrust` module.
+For more available thrust guidance laws options, see the {py:mod}`hapsira.twobody.thrust` module.
 
-### Changing the orbit: {py:class}`~poliastro.maneuver.Maneuver` objects
+### Changing the orbit: {py:class}`~hapsira.maneuver.Maneuver` objects
 
-poliastro helps defining several in-plane and general out-of-plane
-maneuvers with the {py:class}`~poliastro.maneuver.Maneuver` class.
+`hapsira` helps defining several in-plane and general out-of-plane maneuvers with the {py:class}`~hapsira.maneuver.Maneuver` class.
 
-Each `Maneuver` consists on a list of impulses $\Delta v_i$ (changes in velocity),
-each one applied at a certain instant $t_i$. The simplest maneuver is
-a single change of velocity without delay:
-you can recreate it either using the {py:meth}`~poliastro.maneuver.Maneuver.impulse` method
-or instantiating it directly.
+Each `Maneuver` consists on a list of impulses $\Delta v_i$ (changes in velocity), each one applied at a certain instant $t_i$. The simplest maneuver is a single change of velocity without delay: you can recreate it either using the {py:meth}`~hapsira.maneuver.Maneuver.impulse` method or instantiating it directly.
 
 ```python
-from poliastro.maneuver import Maneuver
+from hapsira.maneuver import Maneuver
 
 dv = [5, 0, 0] << (u.m / u.s)
 
@@ -333,13 +300,7 @@ imp = Maneuver.impulse(dv)
 imp = Maneuver((0 << u.s, dv))  # Equivalent
 ```
 
-There are other useful methods you can use to compute common in-plane maneuvers,
-notably {py:meth} `~poliastro.maneuver.Maneuver.hohmann` and
-{py:meth}`~poliastro.maneuver.Maneuver.bielliptic` for
-[Hohmann](https://en.wikipedia.org/wiki/Hohmann_transfer_orbit)
-and [bielliptic](https://en.wikipedia.org/wiki/Bi-elliptic_transfer) transfers respectively.
-Both return the corresponding `Maneuver` object, which in turn you can use to calculate
-the total cost in terms of velocity change $\sum |\Delta v_i|$ and the transfer time:
+There are other useful methods you can use to compute common in-plane maneuvers, notably {py:meth} `~hapsira.maneuver.Maneuver.hohmann` and {py:meth}`~hapsira.maneuver.Maneuver.bielliptic` for [Hohmann](https://en.wikipedia.org/wiki/Hohmann_transfer_orbit) and [bielliptic](https://en.wikipedia.org/wiki/Bi-elliptic_transfer) transfers respectively. Both return the corresponding `Maneuver` object, which in turn you can use to calculate the total cost in terms of velocity change $\sum |\Delta v_i|$ and the transfer time:
 
 ```python
 >>> orb_i = Orbit.circular(Earth, alt=700 << u.km)
@@ -363,8 +324,7 @@ You can also retrieve the individual vectorial impulses:
 (<Quantity 15729.741535747102 s>, <Quantity [ 0.        , 1.41999995, 0.        ] km / s>)
 ```
 
-To actually retrieve the resulting {{ Orbit }} after performing a maneuver, use
-the method {py:meth}`~poliastro.twobody.orbit.scalar.Orbit.apply_maneuver`:
+To actually retrieve the resulting {{ Orbit }} after performing a maneuver, use the method {py:meth}`~hapsira.twobody.orbit.scalar.Orbit.apply_maneuver`:
 
 ```python
 >>> orb_f = orb_i.apply_maneuver(hoh)
@@ -374,28 +334,18 @@ the method {py:meth}`~poliastro.twobody.orbit.scalar.Orbit.apply_maneuver`:
 
 ### More advanced plotting: `OrbitPlotter` objects
 
-You previously saw the {py:meth}`~poliastro.twobody.orbit.scalar.Orbit.plot`
-method to easily plot orbits. Now you might want to plot several orbits in one
-graph (for example, the maneuver you computed in the previous section). For this
-purpose, poliastro has an `OrbitPlotter` object in the
-{py:mod}`~poliastro.plotting` module.
+You previously saw the {py:meth}`~hapsira.twobody.orbit.scalar.Orbit.plot` method to easily plot orbits. Now you might want to plot several orbits in one graph (for example, the maneuver you computed in the previous section). For this purpose, hapsira has an `OrbitPlotter` object in the {py:mod}`~hapsira.plotting` module.
 
-The advantage of this object is that it allows you to select the desired drawing
-backend. All the supported backends are specified in the dictionary
-{py:class}`~poliastro.plotting.orbit.backens.SUPPORTED_ORBIT_PLOTTER_BACKENDS`.
+The advantage of this object is that it allows you to select the desired drawing backend. All the supported backends are specified in the dictionary {py:class}`~hapsira.plotting.orbit.backens.SUPPORTED_ORBIT_PLOTTER_BACKENDS`.
 
-If you would like to know which 2D check the
-{py:class}`~poliastro.plotting.orbit.backens.SUPPORTED_ORBIT_PLOTTER_BACKENDS_2D`.
-For 3D backends, refer to
-{py:class}`~poliastro.plotting.orbit.backens.SUPPORTED_ORBIT_PLOTTER_BACKENDS_3D`.
+If you would like to know which 2D check the {py:class}`~hapsira.plotting.orbit.backens.SUPPORTED_ORBIT_PLOTTER_BACKENDS_2D`. For 3D backends, refer to {py:class}`~hapsira.plotting.orbit.backens.SUPPORTED_ORBIT_PLOTTER_BACKENDS_3D`.
 
-Note that some backends are interactive, meaning that you can move the scene or
-even rotate the three-dimensional view in a dynamic way.
+Note that some backends are interactive, meaning that you can move the scene or even rotate the three-dimensional view in a dynamic way.
 
 To easily visualize several orbits in two dimensions, you can run this code:
 
 ```python
-from poliastro.plotting import OrbitPlotter
+from hapsira.plotting import OrbitPlotter
 
 op = OrbitPlotter(backend_name="matplotlib2D")
 orb_a, orb_f = orb_i.apply_maneuver(hoh, intermediate=True)
@@ -411,7 +361,7 @@ which produces this beautiful plot:
 ---
 align: center
 alt: Hohmann transfer
----   
+---
 Plot of a Hohmann transfer.
 ```
 
@@ -421,24 +371,20 @@ Plot of a Hohmann transfer.
 .. versionadded:: 0.14.0
 ```
 
-Thanks to Astropy and jplephem, poliastro can read Satellite Planet Kernel (SPK) files,
-part of NASA's SPICE toolkit. This means that you can query the position and velocity
-of the planets of the Solar system.
+Thanks to Astropy and jplephem, hapsira can read Satellite Planet Kernel (SPK) files, part of NASA's SPICE toolkit. This means that you can query the position and velocity of the planets of the Solar system.
 
-The {py:class}`poliastro.ephem.Ephem` class allows you to retrieve a planetary orbit
-using low precision ephemerides available in Astropy:
+The {py:class}`hapsira.ephem.Ephem` class allows you to retrieve a planetary orbit using low precision ephemerides available in Astropy:
 
 ```python
 >>> from astropy.time import Time
 >>> epoch = time.Time("2020-04-29 10:43")  # UTC by default
->>> from poliastro.ephem import Ephem
+>>> from hapsira.ephem import Ephem
 >>> earth = Ephem.from_body(Earth, epoch.tdb)
 >>> earth
 Ephemerides at 1 epochs from 2020-04-29 10:44:09.186 (TDB) to 2020-04-29 10:44:09.186 (TDB)
 ```
 
-This does not require any external download. If on the other hand you
-want to use higher precision ephemerides, you can tell Astropy to do so:
+This does not require any external download. If on the other hand you want to use higher precision ephemerides, you can tell Astropy to do so:
 
 ```python
 >>> from astropy.coordinates import solar_system_ephemeris
@@ -447,12 +393,9 @@ Downloading http://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de430.
 |==========>-------------------------------|  23M/119M (19.54%) ETA    59s22ss23
 ```
 
-This in turn will download the ephemerides files from NASA and use them for future computations.
-For more information, check out
-[Astropy documentation on ephemerides](https://docs.astropy.org/en/stable/coordinates/solarsystem.html).
+This in turn will download the ephemerides files from NASA and use them for future computations. For more information, check out [Astropy documentation on ephemerides](https://docs.astropy.org/en/stable/coordinates/solarsystem.html).
 
-If you want to retrieve the **osculating orbit** at a given epoch,
-you can do so using {py:meth}`~poliastro.twobody.orbit.scalar.Orbit.from_ephem`:
+If you want to retrieve the **osculating orbit** at a given epoch, you can do so using {py:meth}`~hapsira.twobody.orbit.scalar.Orbit.from_ephem`:
 
 ```python
 >>> Orbit.from_ephem(Sun, earth, epoch)
@@ -460,18 +403,12 @@ you can do so using {py:meth}`~poliastro.twobody.orbit.scalar.Orbit.from_ephem`:
 ```
 
 ```{note}
-Notice that the position and velocity vectors are given with respect to the
-**Heliocentric Celestial Reference System** (HCRS)
-which means equatorial coordinates centered on the Sun.
+Notice that the position and velocity vectors are given with respect to the **Heliocentric Celestial Reference System** (HCRS) which means equatorial coordinates centered on the Sun.
 ```
 
-In addition, poliastro supports fetching orbital information from 2 online databases:
-Small Body Database Browser (SBDB) and JPL HORIZONS.
+In addition, hapsira supports fetching orbital information from 2 online databases: Small Body Database Browser (SBDB) and JPL HORIZONS.
 
-HORIZONS can be used to generate ephemerides for solar-system bodies,
-while SBDB provides model orbits for all known asteroids and many comets.
-The data is fetched using the wrappers to these services provided by
-[astroquery](https://astroquery.readthedocs.io/):
+HORIZONS can be used to generate ephemerides for solar-system bodies, while SBDB provides model orbits for all known asteroids and many comets. The data is fetched using the wrappers to these services provided by [astroquery](https://astroquery.readthedocs.io/):
 
 ```python
 epoch = Time("2020-04-29 10:43")
@@ -482,18 +419,11 @@ orbit_apophis = Orbit.from_sbdb("Apophis")
 
 ## Traveling through space: solving the Lambert problem
 
-The determination of an orbit given two position vectors and the time of flight
-is known in celestial mechanics as **Lambert's problem**, also known as the
-two body boundary value problem. This contrasts with Kepler's problem or propagation,
-which is rather an initial value problem.
+The determination of an orbit given two position vectors and the time of flight is known in celestial mechanics as **Lambert's problem**, also known as the two body boundary value problem. This contrasts with Kepler's problem or propagation, which is rather an initial value problem.
 
-poliastro allows you to solve Lambert's problem by passing the initial and final orbits
-to {py:meth}`poliastro.maneuver.Maneuver.lambert` instance.
-The time of flight is computed internally since orbits epochs are known.
+`hapsira` allows you to solve Lambert's problem by passing the initial and final orbits to {py:meth}`hapsira.maneuver.Maneuver.lambert` instance. The time of flight is computed internally since orbits epochs are known.
 
-For instance, this is a simplified version of the example
-"Going to Mars with Python using poliastro", where the orbit of the
-Mars Science Laboratory mission (rover Curiosity) is determined:
+For instance, this is a simplified version of the example "Going to Mars with Python using hapsira", where the orbit of the Mars Science Laboratory mission (rover Curiosity) is determined:
 
 ```python
 date_launch = Time('2011-11-26 15:02', scale='tdb')
@@ -525,18 +455,16 @@ alt: Plot of the orbit
 
 ## Creating a CZML document
 
-You can create CZML documents which can then be visualized with the help of
-[Cesium](https://cesium.com/platform/cesiumjs/).
+You can create CZML documents which can then be visualized with the help of [Cesium](https://cesium.com/platform/cesiumjs/).
 
 First, load the orbital data and the CZML Extractor:
 
 ```python
-from poliastro.examples import molniya, iss
-from poliastro.czml.extract_czml import CZMLExtractor
+from hapsira.examples import molniya, iss
+from hapsira.czml.extract_czml import CZMLExtractor
 ```
 
-Then, specify the starting and ending epoch, as well as the number of
-sample points (the higher the number, the more accurate the trajectory):
+Then, specify the starting and ending epoch, as well as the number of sample points (the higher the number, the more accurate the trajectory):
 
 ```python
 start_epoch = iss.epoch
@@ -549,8 +477,6 @@ extractor.add_orbit(molniya, label_text="Molniya")
 extractor.add_orbit(iss, label_text="ISS")
 ```
 
-Finaly, generate the CZML file by calling `extractor.packets`.
-There is more information in
-[this sample Cesium application](https://github.com/poliastro/cesium-app/blob/master/README.md).
+Finaly, generate the CZML file by calling `extractor.packets`. There is more information in [this sample Cesium application](https://github.com/poliastro/cesium-app/blob/master/README.md).
 
 *Per Python ad astra* ;)

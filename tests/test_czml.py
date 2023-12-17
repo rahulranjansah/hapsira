@@ -7,19 +7,17 @@ from astropy.time import Time
 # TODO: Should we have way to handle this configuration without importing numba?
 import pytest
 
-from poliastro.bodies import Mars
-from poliastro.examples import iss, molniya
+from hapsira.bodies import Mars
+from hapsira.examples import iss, molniya
 
 try:
     from czml3.core import Document
 
-    from poliastro.czml.extract_czml import CZMLExtractor
+    from hapsira.czml.extract_czml import CZMLExtractor
 except ImportError:
     pass
 
-pytestmark = pytest.mark.skipif(
-    "czml3" not in sys.modules, reason="requires czml3"
-)
+pytestmark = pytest.mark.skipif("czml3" not in sys.modules, reason="requires czml3")
 
 
 def test_czml_get_document():
@@ -41,7 +39,9 @@ def test_czml_custom_packet():
 
     sample_points = 10
 
-    pr_map_url = "https://upload.wikimedia.org/wikipedia/commons/c/c4/Earthmap1000x500compac.jpg"
+    pr_map_url = (
+        "https://upload.wikimedia.org/wikipedia/commons/c/c4/Earthmap1000x500compac.jpg"
+    )
     scene = False
     expected_packet = """{
     "id": "custom_properties",
@@ -471,9 +471,7 @@ def test_czml_add_trajectory(expected_doc_add_trajectory):
 
     extractor = CZMLExtractor(start_epoch, end_epoch, sample_points)
 
-    extractor.add_trajectory(
-        positions, epochs, label_text="Test", path_color=color
-    )
+    extractor.add_trajectory(positions, epochs, label_text="Test", path_color=color)
 
     assert repr(extractor.packets) == expected_doc_add_trajectory
 
@@ -495,9 +493,7 @@ def test_czml_raises_error_if_length_of_points_and_epochs_not_same():
     extractor = CZMLExtractor(start_epoch, end_epoch, sample_points)
 
     with pytest.raises(ValueError) as excinfo:
-        extractor.add_trajectory(
-            positions, epochs, label_text="Test", path_color=color
-        )
+        extractor.add_trajectory(positions, epochs, label_text="Test", path_color=color)
     assert "Number of Points and Epochs must be equal." in excinfo.exconly()
 
 
@@ -820,9 +816,7 @@ def test_czml_ground_station():
         label_text="GS test",
     )
 
-    extractor.add_ground_station(
-        [0.70930 * u.rad, 0.40046 * u.rad], label_show=False
-    )
+    extractor.add_ground_station([0.70930 * u.rad, 0.40046 * u.rad], label_show=False)
     assert repr(extractor.packets) == expected_doc
 
 
@@ -924,7 +918,4 @@ def test_czml_add_trajectory_raises_error_for_groundtrack_show():
 
     with pytest.raises(NotImplementedError) as excinfo:
         extractor.add_trajectory(positions, epochs, groundtrack_show=True)
-    assert (
-        "Ground tracking for trajectory not implemented yet"
-        in excinfo.exconly()
-    )
+    assert "Ground tracking for trajectory not implemented yet" in excinfo.exconly()

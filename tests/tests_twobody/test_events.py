@@ -5,13 +5,13 @@ import numpy as np
 from numpy.linalg import norm
 import pytest
 
-from poliastro.bodies import Earth
-from poliastro.constants import H0_earth, rho0_earth
-from poliastro.core.events import line_of_sight
-from poliastro.core.perturbations import atmospheric_drag_exponential
-from poliastro.core.propagation import func_twobody
-from poliastro.twobody import Orbit
-from poliastro.twobody.events import (
+from hapsira.bodies import Earth
+from hapsira.constants import H0_earth, rho0_earth
+from hapsira.core.events import line_of_sight
+from hapsira.core.perturbations import atmospheric_drag_exponential
+from hapsira.core.propagation import func_twobody
+from hapsira.twobody import Orbit
+from hapsira.twobody.events import (
     AltitudeCrossEvent,
     LatitudeCrossEvent,
     LithobrakeEvent,
@@ -20,7 +20,7 @@ from poliastro.twobody.events import (
     PenumbraEvent,
     UmbraEvent,
 )
-from poliastro.twobody.propagation import CowellPropagator
+from hapsira.twobody.propagation import CowellPropagator
 
 
 @pytest.mark.slow
@@ -141,9 +141,7 @@ def test_umbra_event_not_triggering_is_ok():
 
 
 def test_umbra_event_crossing():
-    expected_umbra_t = Time(
-        "2020-01-01 00:04:51.328", scale="utc"
-    )  # From Orekit.
+    expected_umbra_t = Time("2020-01-01 00:04:51.328", scale="utc")  # From Orekit.
     attractor = Earth
     tof = 2 * u.d
     epoch = Time("2020-01-01", scale="utc")
@@ -170,9 +168,7 @@ def test_umbra_event_crossing():
 
 
 def test_penumbra_event_crossing():
-    expected_penumbra_t = Time(
-        "2020-01-01 00:04:26.060", scale="utc"
-    )  # From Orekit.
+    expected_penumbra_t = Time("2020-01-01 00:04:26.060", scale="utc")  # From Orekit.
     attractor = Earth
     tof = 2 * u.d
     epoch = Time("2020-01-01", scale="utc")
@@ -194,9 +190,7 @@ def test_penumbra_event_crossing():
         [tof] * u.s,
     )
 
-    assert expected_penumbra_t.isclose(
-        epoch + penumbra_event.last_t, atol=1 * u.s
-    )
+    assert expected_penumbra_t.isclose(epoch + penumbra_event.last_t, atol=1 * u.s)
 
 
 def test_node_cross_event():
@@ -241,9 +235,7 @@ def test_orbit_propagation_continues_if_events_terminal_is_False():
 
     thresh_lat = 60 * u.deg
     # Event occurs at ~1701.7 s.
-    latitude_cross_event = LatitudeCrossEvent(
-        orbit, thresh_lat, terminal=False
-    )
+    latitude_cross_event = LatitudeCrossEvent(orbit, thresh_lat, terminal=False)
     events = [latitude_cross_event]
 
     # The last two tofs are after the detection of the event.
@@ -277,9 +269,7 @@ def test_orbit_propagation_position_vector_does_not_repeat_if_events_terminal_is
     )
 
     # Check position vector doesn't repeat if terminal set to True.
-    assert (
-        len(rr) == 4
-    )  # From the 5th tof in tofs, position vector starts repeating.
+    assert len(rr) == 4  # From the 5th tof in tofs, position vector starts repeating.
 
 
 @pytest.mark.parametrize(

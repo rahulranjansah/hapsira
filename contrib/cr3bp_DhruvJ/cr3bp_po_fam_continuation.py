@@ -371,9 +371,7 @@ class periodic_orbit_fam_continuation(periodic_orbit):
             DF = np.zeros((len(free_vars) - 1, len(free_vars)))
             DF[:-1, :] = retargeted_orbit["DF"]
 
-            DF[-1, :-1] = palc_args[
-                "dx/dtheta"
-            ]  # Time phase constraint part is 0
+            DF[-1, :-1] = palc_args["dx/dtheta"]  # Time phase constraint part is 0
             retargeted_orbit["DF"] = copy.deepcopy(DF)
 
         # Compute null vector and palc constraint components
@@ -567,9 +565,7 @@ class periodic_orbit_fam_continuation(periodic_orbit):
             The default is None
         """
         # Phase constraint = dxi/dtheta  = dxi/dt*(Period/2pi)
-        _, _, _, ax, ay, az = self.ui_partials_acc_cr3bp(
-            results["states"][0, :]
-        )
+        _, _, _, ax, ay, az = self.ui_partials_acc_cr3bp(results["states"][0, :])
         palc_args["dx/dtheta"] = (
             np.array(
                 [
@@ -586,9 +582,7 @@ class periodic_orbit_fam_continuation(periodic_orbit):
         )
         free_vars_index = self.map_vars_index_cr3bp(free_vars)
         stm_col_index = [
-            free_vars_index[i]
-            for i in range(len(free_vars))
-            if free_vars_index[i] < 6
+            free_vars_index[i] for i in range(len(free_vars)) if free_vars_index[i] < 6
         ]
         palc_args["dx/dtheta"] = palc_args["dx/dtheta"][stm_col_index]
 
@@ -654,8 +648,7 @@ class periodic_orbit_fam_continuation(periodic_orbit):
 
         # Check if step size is bigger than a given fraction of the initial step size
         if abs(step_size) < abs(
-            line_search_params["step_size0"]
-            * line_search_params["lower_lim_factor"]
+            line_search_params["step_size0"] * line_search_params["lower_lim_factor"]
         ):
             print(
                 "Updated step size is too small compared to given step size. Rerun with smaller step size, attenuation factor or allowable lower limit"
@@ -682,9 +675,7 @@ class periodic_orbit_fam_continuation(periodic_orbit):
         self.targeted_po_char["conv_tol"] = self.conv_tol
         self.targeted_po_char["int_tol"] = self.int_tol
 
-        self.targeted_po_char["ic"].append(
-            copy.deepcopy(results["states"][0, :])
-        )
+        self.targeted_po_char["ic"].append(copy.deepcopy(results["states"][0, :]))
         self.targeted_po_char["tf"].append(copy.deepcopy(results["t"][-1]))
         self.targeted_po_char["jc"].append(
             copy.deepcopy(self.JC(results["states"][0, :]))

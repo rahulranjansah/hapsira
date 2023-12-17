@@ -17,7 +17,7 @@ import numpy as np
 from numpy.testing import assert_allclose, assert_array_equal
 import pytest
 
-from poliastro.bodies import (
+from hapsira.bodies import (
     Body,
     Earth,
     Jupiter,
@@ -30,12 +30,12 @@ from poliastro.bodies import (
     Uranus,
     Venus,
 )
-from poliastro.constants import J2000, J2000_TDB
-from poliastro.ephem import Ephem
-from poliastro.examples import iss
-from poliastro.frames.ecliptic import HeliocentricEclipticJ2000
-from poliastro.frames.enums import Planes
-from poliastro.frames.equatorial import (
+from hapsira.constants import J2000, J2000_TDB
+from hapsira.ephem import Ephem
+from hapsira.examples import iss
+from hapsira.frames.ecliptic import HeliocentricEclipticJ2000
+from hapsira.frames.enums import Planes
+from hapsira.frames.equatorial import (
     GCRS,
     HCRS,
     JupiterICRS,
@@ -46,12 +46,12 @@ from poliastro.frames.equatorial import (
     UranusICRS,
     VenusICRS,
 )
-from poliastro.frames.util import get_frame
-from poliastro.plotting.orbit.backends import DEFAULT_ORBIT_PLOTTER_BACKENDS
-from poliastro.twobody.angles import E_to_M, nu_to_E
-from poliastro.twobody.orbit import Orbit
-from poliastro.twobody.sampling import TrueAnomalyBounds
-from poliastro.warnings import PatchedConicsWarning
+from hapsira.frames.util import get_frame
+from hapsira.plotting.orbit.backends import DEFAULT_ORBIT_PLOTTER_BACKENDS
+from hapsira.twobody.angles import E_to_M, nu_to_E
+from hapsira.twobody.orbit import Orbit
+from hapsira.twobody.sampling import TrueAnomalyBounds
+from hapsira.warnings import PatchedConicsWarning
 
 
 @pytest.fixture()
@@ -116,9 +116,7 @@ def test_orbit_from_classical_wraps_out_of_range_anomaly_and_warns():
     _ = 0.5 * u.one  # Unused dimensionless value
     _a = 1.0 * u.deg  # Unused angle
     out_angle = np.pi * u.rad
-    with pytest.warns(
-        UserWarning, match="Wrapping true anomaly to -π <= nu < π"
-    ):
+    with pytest.warns(UserWarning, match="Wrapping true anomaly to -π <= nu < π"):
         Orbit.from_classical(
             attractor=Sun, a=_d, ecc=_, inc=_a, raan=_a, argp=_a, nu=out_angle
         )
@@ -161,8 +159,7 @@ def test_bad_inclination_raises_exception():
             attractor=_body, a=_d, ecc=_, inc=bad_inc, raan=_a, argp=_a, nu=_a
         )
     assert (
-        "ValueError: Inclination must be between 0 and 180 degrees"
-        in excinfo.exconly()
+        "ValueError: Inclination must be between 0 and 180 degrees" in excinfo.exconly()
     )
 
 
@@ -182,9 +179,7 @@ def test_bad_hyperbolic_raises_exception():
             argp=_a,
             nu=_a,
         )
-    assert (
-        "Hyperbolic orbits have negative semimajor axis" in excinfo.exconly()
-    )
+    assert "Hyperbolic orbits have negative semimajor axis" in excinfo.exconly()
 
 
 def test_apply_maneuver_changes_epoch():
@@ -228,9 +223,7 @@ def test_circular_has_proper_semimajor_axis():
 
 def test_circular_raises_error_if_negative_altitude():
     with pytest.raises(ValueError) as excinfo:
-        Orbit.circular(
-            Earth, -1 * u.m, epoch=Time(0.0, format="jd", scale="tdb")
-        )
+        Orbit.circular(Earth, -1 * u.m, epoch=Time(0.0, format="jd", scale="tdb"))
     assert "Altitude of an orbit cannot be negative." in excinfo.exconly()
 
 
@@ -358,17 +351,13 @@ def test_frozen_orbit_no_args(attractor, alt, expected_inc, expected_argp):
 def test_frozen_orbit_with_non_critical_argp(
     attractor, alt, argp, expected_inc, ecc, expected_ecc
 ):
-    orbit = Orbit.frozen(
-        attractor, alt, argp=argp, ecc=ecc
-    )  # Non-critical value
+    orbit = Orbit.frozen(attractor, alt, argp=argp, ecc=ecc)  # Non-critical value
     assert_allclose(orbit.inc, expected_inc)
     assert_allclose(orbit.ecc, expected_ecc)
 
 
 def test_frozen_orbit_non_critical_inclination():
-    orbit = Orbit.frozen(
-        Earth, 1e3 * u.km, inc=0 * u.deg
-    )  # Non-critical value
+    orbit = Orbit.frozen(Earth, 1e3 * u.km, inc=0 * u.deg)  # Non-critical value
     assert orbit.argp in [np.pi / 2, 3 * np.pi / 2] * u.rad
 
 
@@ -384,8 +373,7 @@ def test_frozen_orbit_non_spherical_arguments():
         Orbit.frozen(Jupiter, 1 * u.m)
     assert excinfo.type == AttributeError
     assert (
-        "Attractor Jupiter has not spherical harmonics implemented"
-        in excinfo.exconly()
+        "Attractor Jupiter has not spherical harmonics implemented" in excinfo.exconly()
     )
 
 
@@ -431,7 +419,7 @@ def test_sample_numpoints():
 
 
 def test_sample_big_orbits():
-    # See https://github.com/poliastro/poliastro/issues/265
+    # See https://github.com/hapsira/hapsira/issues/265
     ss = Orbit.from_vectors(
         Sun,
         [-9_018_878.6, -94_116_055, 22_619_059] * u.km,
@@ -528,9 +516,7 @@ def test_orbit_accepts_ecliptic_plane():
 
     ss = Orbit.from_vectors(Sun, r, v, plane=Planes.EARTH_ECLIPTIC)
 
-    assert ss.get_frame().is_equivalent_frame(
-        HeliocentricEclipticJ2000(obstime=J2000)
-    )
+    assert ss.get_frame().is_equivalent_frame(HeliocentricEclipticJ2000(obstime=J2000))
 
 
 def test_orbit_represent_as_produces_correct_data():
@@ -549,8 +535,7 @@ def test_orbit_represent_as_produces_correct_data():
     # https://github.com/astropy/astropy/issues/7793
     assert (result.xyz == expected_result.xyz).all()
     assert (
-        result.differentials["s"].d_xyz
-        == expected_result.differentials["s"].d_xyz
+        result.differentials["s"].d_xyz == expected_result.differentials["s"].d_xyz
     ).all()
 
 
@@ -655,9 +640,7 @@ def test_synchronous_orbit_pericenter_smaller_than_atractor_radius(
     with pytest.raises(ValueError) as excinfo:
         Orbit.synchronous(attractor=attractor, ecc=ecc)
     assert excinfo.type == ValueError
-    assert (
-        "The orbit for the given parameters doesn't exist" in excinfo.exconly()
-    )
+    assert "The orbit for the given parameters doesn't exist" in excinfo.exconly()
 
 
 @pytest.mark.parametrize(
@@ -703,12 +686,8 @@ def test_synchronous_orbit_supersynchronous(
         ),
     ],
 )
-def test_synchronous_orbit_semisynchronous(
-    attractor, ecc, expected_a, expected_period
-):
-    ss = Orbit.synchronous(
-        attractor=attractor, ecc=ecc, period_mul=0.5 * u.one
-    )
+def test_synchronous_orbit_semisynchronous(attractor, ecc, expected_a, expected_period):
+    ss = Orbit.synchronous(attractor=attractor, ecc=ecc, period_mul=0.5 * u.one)
     assert_quantity_allclose(ss.ecc, ecc, rtol=1.0e-3)
     assert_quantity_allclose(ss.a, expected_a, rtol=1.0e-3)
     assert_quantity_allclose(ss.period, expected_period, rtol=1.0e-3)
@@ -765,9 +744,7 @@ def test_heliosynchronous_orbit_raises_floating_point_error_if_invalid_input():
 
     with pytest.raises(ValueError) as excinfo:
         Orbit.heliosynchronous(Earth, a=a, inc=inc)
-    assert (
-        "No SSO orbit with given parameters can be found." in excinfo.exconly()
-    )
+    assert "No SSO orbit with given parameters can be found." in excinfo.exconly()
 
 
 def test_perigee_and_apogee():
@@ -818,9 +795,7 @@ def test_expected_angular_momentum():
     )
     orbit_h_mag = orbit.h_mag
 
-    assert_quantity_allclose(
-        orbit_h_mag.value, expected_ang_mag.value, rtol=1e-2
-    )
+    assert_quantity_allclose(orbit_h_mag.value, expected_ang_mag.value, rtol=1e-2)
 
 
 def test_expected_last_perifocal_passage():
@@ -958,13 +933,9 @@ def test_orbit_creation_using_skycoord(attractor):
         attractor, Planes.EARTH_EQUATOR, obstime=coord.obstime
     )
 
-    coord_transformed_to_irf = coord.transform_to(
-        inertial_frame_at_body_centre
-    )
+    coord_transformed_to_irf = coord.transform_to(inertial_frame_at_body_centre)
     pos_transformed_to_irf = coord_transformed_to_irf.cartesian.xyz
-    vel_transformed_to_irf = coord_transformed_to_irf.cartesian.differentials[
-        "s"
-    ].d_xyz
+    vel_transformed_to_irf = coord_transformed_to_irf.cartesian.differentials["s"].d_xyz
 
     assert (o.r == pos_transformed_to_irf).all()
     assert (o.v == vel_transformed_to_irf).all()
@@ -991,19 +962,13 @@ def test_orbit_creation_using_frame_obj(attractor, frame, obstime):
         attractor, Planes.EARTH_EQUATOR, obstime=coord.obstime
     )
 
-    coord_transformed_to_irf = coord.transform_to(
-        inertial_frame_at_body_centre
-    )
+    coord_transformed_to_irf = coord.transform_to(inertial_frame_at_body_centre)
 
     pos_transformed_to_irf = coord_transformed_to_irf.cartesian.xyz
-    vel_transformed_to_irf = coord_transformed_to_irf.cartesian.differentials[
-        "s"
-    ].d_xyz
+    vel_transformed_to_irf = coord_transformed_to_irf.cartesian.differentials["s"].d_xyz
 
     assert_quantity_allclose(o.r, pos_transformed_to_irf, atol=1e-5 * u.km)
-    assert_quantity_allclose(
-        o.v, vel_transformed_to_irf, atol=1e-5 * u.km / u.s
-    )
+    assert_quantity_allclose(o.v, vel_transformed_to_irf, atol=1e-5 * u.km / u.s)
 
 
 @pytest.mark.parametrize("obstime", [J2000, J2000_TDB])
@@ -1014,9 +979,7 @@ def test_from_coord_fails_for_multiple_positions(obstime):
     cartrep = CartesianRepresentation(
         [[1, 0, 0], [0.9, 0.1, 0]] * u.km, differentials=cartdiff, xyz_axis=1
     )
-    coords = GCRS(
-        cartrep, representation_type=CartesianRepresentation, obstime=obstime
-    )
+    coords = GCRS(cartrep, representation_type=CartesianRepresentation, obstime=obstime)
 
     with pytest.raises(ValueError) as excinfo:
         Orbit.from_coords(Earth, coords)
@@ -1030,12 +993,8 @@ def test_from_coord_if_coord_is_not_of_shape_zero():
     pos = [0, 1, 0]
     vel = [1, 0, 0]
     cartdiff = CartesianDifferential([vel] * u.km / u.s, xyz_axis=1)
-    cartrep = CartesianRepresentation(
-        [pos] * u.km, differentials=cartdiff, xyz_axis=1
-    )
-    coords = GCRS(
-        cartrep, representation_type=CartesianRepresentation, obstime=J2000
-    )
+    cartrep = CartesianRepresentation([pos] * u.km, differentials=cartdiff, xyz_axis=1)
+    coords = GCRS(cartrep, representation_type=CartesianRepresentation, obstime=J2000)
 
     ss = Orbit.from_coords(Earth, coords)
 
@@ -1044,7 +1003,7 @@ def test_from_coord_if_coord_is_not_of_shape_zero():
 
 
 def test_propagate_to_anomaly_gives_expected_result():
-    # From "Going to Jupiter with Python using Jupyter and poliastro.ipynb"
+    # From "Going to Jupiter with Python using Jupyter and hapsira.ipynb"
     ic1 = Orbit.from_vectors(
         Sun,
         [1.02465527e08, -1.02313505e08, -4.43533465e07] * u.km,
@@ -1059,12 +1018,11 @@ def test_propagate_to_anomaly_gives_expected_result():
 
 
 def test_sample_with_out_of_range_anomaly_works():
-    # From "Going to Jupiter with Python using Jupyter and poliastro.ipynb"
+    # From "Going to Jupiter with Python using Jupyter and hapsira.ipynb"
     ic1 = Orbit.from_vectors(
         Sun,
         [1.02465527e08, -1.02313505e08, -4.43533465e07] << u.km,
-        [2198705.82621226, 1897186.74383856, 822370.88977487]
-        << (u.km / u.day),
+        [2198705.82621226, 1897186.74383856, 822370.88977487] << (u.km / u.day),
         Time("2011-08-05 16:26:06.183", scale="tdb"),
     )
     coordinates = ic1.to_ephem(
@@ -1124,10 +1082,7 @@ def test_from_vectors_wrong_dimensions_fails():
 
     with pytest.raises(ValueError) as excinfo:
         Orbit.from_vectors(Earth, bad_r, bad_v)
-    assert (
-        "ValueError: Vectors must have dimension 1, got 2 and 3"
-        in excinfo.exconly()
-    )
+    assert "ValueError: Vectors must have dimension 1, got 2 and 3" in excinfo.exconly()
 
 
 def test_from_classical_wrong_dimensions_fails():
@@ -1139,9 +1094,7 @@ def test_from_classical_wrong_dimensions_fails():
         Orbit.from_classical(
             attractor=Earth, a=bad_a, ecc=_, inc=_a, raan=_a, argp=_a, nu=_a
         )
-    assert (
-        "ValueError: Elements must be scalar, got [1.] AU" in excinfo.exconly()
-    )
+    assert "ValueError: Elements must be scalar, got [1.] AU" in excinfo.exconly()
 
 
 def test_orbit_change_attractor_returns_self():
@@ -1158,9 +1111,7 @@ def test_orbit_change_attractor_out_of_SOI():
 
     with pytest.raises(ValueError) as excinfo:
         ss.change_attractor(Earth)
-    assert (
-        "ValueError: Orbit is out of new attractor's SOI" in excinfo.exconly()
-    )
+    assert "ValueError: Orbit is out of new attractor's SOI" in excinfo.exconly()
 
 
 def test_orbit_change_attractor_force():
@@ -1180,9 +1131,7 @@ def test_orbit_change_attractor_force():
 def test_orbit_change_attractor_unrelated_body():
     with pytest.raises(ValueError) as excinfo:
         iss.change_attractor(Mars)
-    assert (
-        "ValueError: Cannot change to unrelated attractor" in excinfo.exconly()
-    )
+    assert "ValueError: Cannot change to unrelated attractor" in excinfo.exconly()
 
 
 def test_orbit_change_attractor_closed():
@@ -1233,9 +1182,7 @@ def with_units(draw, elements, unit):
     return value * unit
 
 
-angles = partial(
-    st.floats, min_value=-np.pi, max_value=np.pi, exclude_max=True
-)
+angles = partial(st.floats, min_value=-np.pi, max_value=np.pi, exclude_max=True)
 angles_q = partial(with_units, elements=angles(), unit=u.rad)
 
 
@@ -1252,16 +1199,14 @@ def test_time_to_anomaly(expected_nu):
     # In some corner cases the resulting anomaly goes out of range,
     # and rather than trying to fix it right now
     # we will wait until we remove the round tripping,
-    # see https://github.com/poliastro/poliastro/issues/921
+    # see https://github.com/hapsira/hapsira/issues/921
     # FIXME: Add test that verifies that `orbit.nu` is always within range
-    assert_quantity_allclose(
-        iss_propagated.nu, expected_nu, atol=1e-12 * u.rad
-    )
+    assert_quantity_allclose(iss_propagated.nu, expected_nu, atol=1e-12 * u.rad)
 
 
 @pytest.mark.xfail
 def test_can_set_iss_attractor_to_earth():
-    # See https://github.com/poliastro/poliastro/issues/798
+    # See https://github.com/hapsira/hapsira/issues/798
     epoch = Time("2019-11-10 12:00:00")
     ephem = Ephem.from_horizons(
         "International Space Station",
@@ -1290,7 +1235,7 @@ def test_issue_916(mock_query):
 
 
 def test_near_parabolic_M_does_not_hang(near_parabolic):
-    # See https://github.com/poliastro/poliastro/issues/907
+    # See https://github.com/hapsira/hapsira/issues/907
     expected_nu = -168.65 * u.deg
     orb = near_parabolic.propagate_to_anomaly(expected_nu)
 
@@ -1308,7 +1253,7 @@ def test_propagation_near_parabolic_orbits_zero_seconds_gives_same_anomaly(
 
 
 def test_propagation_near_parabolic_orbits_does_not_hang(near_parabolic):
-    # See https://github.com/poliastro/poliastro/issues/475
+    # See https://github.com/hapsira/hapsira/issues/475
     orb_final = near_parabolic.propagate(near_parabolic.period)
 
     # Smoke test

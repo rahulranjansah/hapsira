@@ -21,9 +21,9 @@ import numpy as np
 
 from mpl_toolkits.axes_grid1.inset_locator import mark_inset, zoomed_inset_axes
 
-from poliastro.bodies import Earth
-from poliastro.maneuver import Maneuver
-from poliastro.twobody import Orbit
+from hapsira.bodies import Earth
+from hapsira.maneuver import Maneuver
+from hapsira.twobody import Orbit
 ```
 
 ```{code-cell} ipython3

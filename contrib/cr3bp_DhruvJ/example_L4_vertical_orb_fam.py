@@ -92,14 +92,10 @@ data_trace.append(
 )
 # Add Earth
 data_trace.append(
-    go.Scatter3d(
-        x=[-sys_p1p2.mu], y=[0], z=[0], marker=dict(color="blue", size=10)
-    )
+    go.Scatter3d(x=[-sys_p1p2.mu], y=[0], z=[0], marker=dict(color="blue", size=10))
 )
 data_trace.append(
-    go.Scatter3d(
-        x=[1 - sys_p1p2.mu], y=[0], z=[0], marker=dict(color="grey", size=7)
-    )
+    go.Scatter3d(x=[1 - sys_p1p2.mu], y=[0], z=[0], marker=dict(color="grey", size=7))
 )
 
 

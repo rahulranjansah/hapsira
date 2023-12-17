@@ -17,12 +17,12 @@ kernelspec:
 from astropy.time import Time
 from astropy import units as u
 
-from poliastro.bodies import Earth, Mars, Sun
-from poliastro.ephem import Ephem
-from poliastro.frames import Planes
-from poliastro.plotting import OrbitPlotter
-from poliastro.plotting.orbit.backends import Plotly3D
-from poliastro.util import time_range
+from hapsira.bodies import Earth, Mars, Sun
+from hapsira.ephem import Ephem
+from hapsira.frames import Planes
+from hapsira.plotting import OrbitPlotter
+from hapsira.plotting.orbit.backends import Plotly3D
+from hapsira.util import time_range
 
 EPOCH = Time("2018-02-18 12:00:00", scale="tdb")
 ```
@@ -39,7 +39,7 @@ roadster
 ```
 
 ```{code-cell}
-from poliastro.plotting.misc import plot_solar_system
+from hapsira.plotting.misc import plot_solar_system
 ```
 
 ```{code-cell}

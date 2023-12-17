@@ -155,7 +155,9 @@ class cr3bp_model:
                 (ic, np.identity(6).flatten())
             )  # Appends the IC for STM: IC[6x1] + I_6x6
         elif len(ic) == 42:
-            self.stm_bool = 1  # To make sure stm_bool is set to 1 if all 42 states are passed
+            self.stm_bool = (
+                1  # To make sure stm_bool is set to 1 if all 42 states are passed
+            )
         if len(ic) == 6:
             stm_bool == 0
         elif len(ic) != 6 and len(ic) != 42:
@@ -182,9 +184,7 @@ class cr3bp_model:
         ):  # Terminates integration when event encountered, solution is hit from from either direction: crossising -y to +y region or +y to -y region, that is crossing XZ or XY plane
             xcross.terminal = True
             xcross.direction = 0
-        elif (
-            self.xcross_cond == 2
-        ):  # Track events when crossing -y to +y region
+        elif self.xcross_cond == 2:  # Track events when crossing -y to +y region
             xcross.terminal = True
             xcross.direction = 1
         else:  # Does not track any events
@@ -192,10 +192,7 @@ class cr3bp_model:
 
         # Numerical Integration
         # Uses a custom events function during propagation
-        if (
-            self.custom_events_func is not None
-            and use_custom_events_func is True
-        ):
+        if self.custom_events_func is not None and use_custom_events_func is True:
             fun = solve_ivp(
                 self.__Nondim_DE_CR3BP_STM,
                 [t0, tf],
@@ -372,9 +369,7 @@ class cr3bp_model:
         if state is None:
             state = self.ic
 
-        dist_p1_p3 = (
-            (state[0] + self.mu) ** 2 + state[1] ** 2 + state[2] ** 2
-        ) ** 0.5
+        dist_p1_p3 = ((state[0] + self.mu) ** 2 + state[1] ** 2 + state[2] ** 2) ** 0.5
         dist_p2_p3 = (
             (state[0] - 1 + self.mu) ** 2 + state[1] ** 2 + state[2] ** 2
         ) ** 0.5
@@ -467,9 +462,7 @@ class cr3bp_model:
         x_plus_mu = state[0] + self.mu  # x+mu
         x_minus_1_plus_mu = state[0] - 1 + self.mu  # x-1+mu
 
-        one_minus_mu_dist_p1_p3_3 = (
-            one_minus_mu / dist_p1_p3**3
-        )  # (1-mu)/d13^3
+        one_minus_mu_dist_p1_p3_3 = one_minus_mu / dist_p1_p3**3  # (1-mu)/d13^3
         mu_dist_p2_p3_3 = self.mu / dist_p2_p3**3  # mu/d23^3
 
         # Calculate Ux, Uy, Uz, ax, ay, az
@@ -479,9 +472,7 @@ class cr3bp_model:
             - mu_dist_p2_p3_3 * x_minus_1_plus_mu
         )
         Uy = (
-            state[1]
-            - one_minus_mu_dist_p1_p3_3 * state[1]
-            - mu_dist_p2_p3_3 * state[1]
+            state[1] - one_minus_mu_dist_p1_p3_3 * state[1] - mu_dist_p2_p3_3 * state[1]
         )
         Uz = -one_minus_mu_dist_p1_p3_3 * state[2] - mu_dist_p2_p3_3 * state[2]
         ax = 2 * state[4] + Ux

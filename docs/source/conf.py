@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 #
-# poliastro documentation build configuration file.
+# hapsira documentation build configuration file.
 #
 # This file is execfile()d with the current directory set to its
 # containing dir.
@@ -32,11 +32,13 @@ extensions = [
 ]
 
 # GitHub role config
-github_default_org_project = ("poliastro", "poliastro")
+github_default_org_project = ("pleiszenburg", "hapsira")
 
 # MathJax config
 # See https://github.com/spatialaudio/nbsphinx/issues/572#issuecomment-853389268
-mathjax_path = "https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+mathjax_path = (
+    "https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+)
 mathjax2_config = {
     "tex2jax": {
         "inlineMath": [["$", "$"], ["\\(", "\\)"]],
@@ -51,8 +53,8 @@ myst_enable_extensions = [
     "substitution",
 ]
 myst_substitutions = {
-    "Ephem": "{py:class}`~poliastro.ephem.Ephem`",
-    "Orbit": "{py:class}`~poliastro.twobody.orbit.scalar.Orbit`",
+    "Ephem": "{py:class}`~hapsira.ephem.Ephem`",
+    "Orbit": "{py:class}`~hapsira.twobody.orbit.scalar.Orbit`",
 }
 
 # Hoverxref Extension
@@ -84,8 +86,8 @@ source_suffix = {
     ".md": "markdown",
 }
 
-project = "poliastro"
-copyright = "2013, Juan Luis Cano Rodríguez and the poliastro development team"
+project = "hapsira"
+copyright = "2023 Sebastian M. Ernst"
 
 project_ver = version(project)
 version = ".".join(project_ver.split(".")[:2])
@@ -110,7 +112,7 @@ intersphinx_mapping = {
 # Warning suppresses
 suppress_warnings = ["image.nonlocal_uri"]
 
-if os.environ.get("POLIASTRO_SKIP_NOTEBOOKS") == "True":
+if os.environ.get("HAPSIRA_SKIP_NOTEBOOKS") == "True":
     nbsphinx_execute = "never"
     suppress_warnings.append("nbsphinx.thumbnail")
 else:
@@ -122,30 +124,34 @@ html_theme = "sphinx_rtd_theme"
 html_context = {
     "sidebar_external_links_caption": "Links",
     "sidebar_external_links": [
-        (
-            '<i class="fa fa-rss fa-fw"></i> Blog',
-            "https://www.poliastro.space",
-        ),
+        # (
+        #     '<i class="fa fa-rss fa-fw"></i> Blog',
+        #     "https://www.hapsira.space",
+        # ),
         (
             '<i class="fa fa-github fa-fw"></i> Source code',
-            "https://github.com/poliastro/poliastro",
+            "https://github.com/pleiszenburg/hapsira",
         ),
         (
             '<i class="fa fa-bug fa-fw"></i> Issue tracker',
-            "https://github.com/poliastro/poliastro/issues",
+            "https://github.com/pleiszenburg/hapsira/issues",
         ),
         (
             '<i class="fa fa-envelope fa-fw"></i> Mailing list',
-            "https://groups.io/g/poliastro-dev",
+            "https://groups.io/g/hapsira-dev",
         ),
         (
             '<i class="fa fa-comments fa-fw"></i> Chat',
-            "http://chat.poliastro.space",
+            "https://matrix.to/#/#hapsira:matrix.org",
         ),
         (
-            '<i class="fa fa-file-text fa-fw"></i> Citation',
-            "https://doi.org/10.5281/zenodo.593610",
-        ),
+            '<i class="fa fa-info-circle fa-fw"></i> pleiszenburg.de',
+            "https://www.pleiszenburg.de/",
+        )
+        # (
+        #     '<i class="fa fa-file-text fa-fw"></i> Citation',
+        #     "https://doi.org/10.5281/zenodo.593610",
+        # ),
     ],
 }
 html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
@@ -156,7 +162,7 @@ html_js_files = ["language_data.js"]
 
 # Thumbnail selection for nbsphinx gallery
 nbsphinx_thumbnails = {
-    "examples/going-to-mars-with-python-using-poliastro": "_static/thumbnails/going_to_mars_thumbnail.png",
+    "examples/going-to-mars-with-python-using-hapsira": "_static/thumbnails/going_to_mars_thumbnail.png",
     "examples/plotting-in-3D": "_static/thumbnails/3d_plotting_thumbnail.png",
     "examples/propagation-using-cowells-formulation": "_static/thumbnails/cowell_thumbnail.png",
     "examples/czml-tutorial": "_static/thumbnails/cesium_thumbnail.png",
@@ -186,7 +192,7 @@ autoapi_ignore = [
     "*_compat*",  # To avoid WARNING: more than one target found for cross-reference '__class__'
 ]
 
-exclude_patterns.extend(["autoapi/index.rst", "autoapi/poliastro/index.rst"])
+exclude_patterns.extend(["autoapi/index.rst", "autoapi/hapsira/index.rst"])
 
 # Ignore sphinx-autoapi warnings on reimported objects
 # See https://github.com/readthedocs/sphinx-autoapi/issues/285

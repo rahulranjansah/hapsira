@@ -17,7 +17,7 @@ kernelspec:
 
 By definition, a groundtrack is just the projection of the position left by a
 satellite over its attractor. They are usually applied to Earth orbiting
-spacecraft and thus, have been implemented within the `poliastro.earth.plotting`
+spacecraft and thus, have been implemented within the `hapsira.earth.plotting`
 sub-package.
 
 Something interesting about these kind of figures is that they take the Earth's rotation into account.
@@ -25,7 +25,7 @@ Therefore, it is possible to predict over which locations in
 the planet will the spacecraft be within the next hours or days.
 
 In this notebook, we will show all the possibilities that the
-`GrountrackPlotter` class offers to poliastro's users. Let us start by importing
+`GrountrackPlotter` class offers to hapsira's users. Let us start by importing
 some useful modules!
 
 ```{code-cell} ipython3
@@ -33,10 +33,10 @@ some useful modules!
 from astropy import units as u
 
 # Earth focused modules, ISS example orbit and time span generator
-from poliastro.earth import EarthSatellite
-from poliastro.earth.plotting import GroundtrackPlotter
-from poliastro.examples import iss
-from poliastro.util import time_range
+from hapsira.earth import EarthSatellite
+from hapsira.earth.plotting import GroundtrackPlotter
+from hapsira.examples import iss
+from hapsira.util import time_range
 ```
 
 ## EarthSatellite instance and desired time span

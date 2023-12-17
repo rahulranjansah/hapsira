@@ -5,7 +5,7 @@ from astropy.time import Time
 import numpy as np
 import pytest
 
-from poliastro.bodies import (
+from hapsira.bodies import (
     Earth,
     Jupiter,
     Mars,
@@ -17,9 +17,9 @@ from poliastro.bodies import (
     Uranus,
     Venus,
 )
-from poliastro.constants import J2000
-from poliastro.frames.ecliptic import GeocentricSolarEcliptic
-from poliastro.frames.equatorial import (
+from hapsira.constants import J2000
+from hapsira.frames.ecliptic import GeocentricSolarEcliptic
+from hapsira.frames.equatorial import (
     GCRS,
     HCRS,
     ICRS,
@@ -31,7 +31,7 @@ from poliastro.frames.equatorial import (
     UranusICRS,
     VenusICRS,
 )
-from poliastro.frames.fixed import (
+from hapsira.frames.fixed import (
     ITRS,
     JupiterFixed,
     MarsFixed,
@@ -115,9 +115,7 @@ def test_icrs_body_position_to_planetary_frame_yields_zeros(body, frame):
         .represent_as(CartesianRepresentation)
     )
 
-    assert_quantity_allclose(
-        vector_result.xyz, [0, 0, 0] * u.km, atol=1e-7 * u.km
-    )
+    assert_quantity_allclose(vector_result.xyz, [0, 0, 0] * u.km, atol=1e-7 * u.km)
 
 
 @pytest.mark.parametrize(
@@ -134,9 +132,7 @@ def test_icrs_body_position_to_planetary_frame_yields_zeros(body, frame):
         (Neptune, NeptuneFixed, NeptuneICRS),
     ],
 )
-def test_planetary_fixed_inertial_conversion(
-    body, fixed_frame, inertial_frame
-):
+def test_planetary_fixed_inertial_conversion(body, fixed_frame, inertial_frame):
     epoch = J2000
     fixed_position = fixed_frame(
         0 * u.deg,
@@ -145,9 +141,7 @@ def test_planetary_fixed_inertial_conversion(
         obstime=epoch,
         representation_type="spherical",
     )
-    inertial_position = fixed_position.transform_to(
-        inertial_frame(obstime=epoch)
-    )
+    inertial_position = fixed_position.transform_to(inertial_frame(obstime=epoch))
     assert_quantity_allclose(
         fixed_position.spherical.distance, body.R, atol=1e-7 * u.km
     )
@@ -170,9 +164,7 @@ def test_planetary_fixed_inertial_conversion(
         (Neptune, NeptuneFixed, NeptuneICRS),
     ],
 )
-def test_planetary_inertial_fixed_conversion(
-    body, fixed_frame, inertial_frame
-):
+def test_planetary_inertial_fixed_conversion(body, fixed_frame, inertial_frame):
     epoch = J2000
     inertial_position = inertial_frame(
         0 * u.deg,
@@ -204,9 +196,7 @@ def test_planetary_inertial_fixed_conversion(
         (Neptune, NeptuneFixed, NeptuneICRS),
     ],
 )
-def test_planetary_inertial_roundtrip_vector(
-    body, fixed_frame, inertial_frame
-):
+def test_planetary_inertial_roundtrip_vector(body, fixed_frame, inertial_frame):
     epoch = J2000
     sampling_time = 10 * u.s
     fixed_position = fixed_frame(
@@ -249,9 +239,7 @@ def test_GeocentricSolarEcliptic_against_data():
 def test_GeocentricSolarEcliptic_raises_error_nonscalar_obstime():
     with pytest.raises(ValueError) as excinfo:
         gcrs = GCRS(ra="02h31m49.09s", dec="+89d15m50.8s", distance=200 * u.km)
-        gcrs.transform_to(
-            GeocentricSolarEcliptic(obstime=Time(["J3200", "J2000"]))
-        )
+        gcrs.transform_to(GeocentricSolarEcliptic(obstime=Time(["J3200", "J2000"])))
     assert (
         "To perform this transformation the "
         "obstime Attribute must be a scalar." in str(excinfo.value)
@@ -300,9 +288,7 @@ def test_GeocentricSolarEcliptic_raises_error_nonscalar_obstime():
         ),
     ],
 )
-def test_fixed_frame_calculation_gives_expected_result(
-    body, fixed_frame, radecW
-):
+def test_fixed_frame_calculation_gives_expected_result(body, fixed_frame, radecW):
     epoch = J2000
     fixed_position = fixed_frame(
         0 * u.deg,

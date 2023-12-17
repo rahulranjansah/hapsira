@@ -1,9 +1,6 @@
 # Background
 
-These notebooks contain more theoretical explanations
-about the Astrodynamics concepts used in poliastro.
-For further information,
-have a look at the books we recommend in the {ref}`bibliography`.
+These notebooks contain more theoretical explanations about the Astrodynamics concepts used in `hapsira`. For further information, have a look at the books we recommend in the {ref}`bibliography`.
 
 ```{eval-rst}
 .. nbgallery::

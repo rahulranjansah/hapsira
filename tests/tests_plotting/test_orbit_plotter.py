@@ -6,21 +6,21 @@ from astropy.time import Time
 from matplotlib import pyplot as plt
 import pytest
 
-from poliastro.bodies import Earth, Jupiter, Mars, Sun
-from poliastro.constants import J2000_TDB
-from poliastro.ephem import Ephem
-from poliastro.examples import churi, iss, molniya
-from poliastro.frames import Planes
-from poliastro.maneuver import Maneuver
-from poliastro.plotting import OrbitPlotter
-from poliastro.plotting.orbit.backends import (
+from hapsira.bodies import Earth, Jupiter, Mars, Sun
+from hapsira.constants import J2000_TDB
+from hapsira.ephem import Ephem
+from hapsira.examples import churi, iss, molniya
+from hapsira.frames import Planes
+from hapsira.maneuver import Maneuver
+from hapsira.plotting import OrbitPlotter
+from hapsira.plotting.orbit.backends import (
     DEFAULT_ORBIT_PLOTTER_BACKENDS,
     DEFAULT_ORBIT_PLOTTER_BACKENDS_2D,
     DEFAULT_ORBIT_PLOTTER_BACKENDS_3D,
     Matplotlib2D,
 )
-from poliastro.twobody import Orbit
-from poliastro.util import time_range
+from hapsira.twobody import Orbit
+from hapsira.util import time_range
 
 # @pytest.mark.parametrize("backend", SUPPORTED_ORBIT_PLOTTER_BACKENDS)
 # def test_get_figure_has_expected_properties(backend):
@@ -159,9 +159,7 @@ def test_set_view(Backend):
     [(True, (0.0, 0.0, 0.0, 1.0)), (False, (1.0, 1.0, 1.0, 1))],
 )
 @pytest.mark.parametrize("MatplotlibBackend", [Matplotlib2D])
-def test_dark_theme_backend_matplotlib(
-    MatplotlibBackend, is_dark, expected_bg
-):
+def test_dark_theme_backend_matplotlib(MatplotlibBackend, is_dark, expected_bg):
     backend = MatplotlibBackend(use_dark_theme=is_dark)
     plotter = OrbitPlotter(backend=backend)
     assert plotter.backend.scene.get_facecolor() == expected_bg
@@ -244,7 +242,7 @@ def test_set_frame_plots_same_colors():
 
 
 def test_redraw_keeps_trajectories():
-    # See https://github.com/poliastro/poliastro/issues/518
+    # See https://github.com/hapsira/hapsira/issues/518
     op = OrbitPlotter()
     trajectory = churi.sample()
     op.plot_body_orbit(Mars, J2000_TDB, label="Mars")
@@ -262,18 +260,14 @@ def test_plot_ephem_different_plane_raises_error():
     unused_coordinates = CartesianRepresentation(
         [(1, 0, 0)] * u.au,
         xyz_axis=1,
-        differentials=CartesianDifferential(
-            [(0, 1, 0)] * (u.au / u.day), xyz_axis=1
-        ),
+        differentials=CartesianDifferential([(0, 1, 0)] * (u.au / u.day), xyz_axis=1),
     )
 
     op = OrbitPlotter(plane=Planes.EARTH_ECLIPTIC)
     op.set_attractor(Sun)
     op.set_body_frame(Earth)
     with pytest.raises(ValueError) as excinfo:
-        op.plot_ephem(
-            Ephem(unused_epochs, unused_coordinates, Planes.EARTH_EQUATOR)
-        )
+        op.plot_ephem(Ephem(unused_epochs, unused_coordinates, Planes.EARTH_EQUATOR))
 
     assert (
         "sample the ephemerides using a different plane or create a new plotter"
@@ -348,9 +342,7 @@ def test_plot_ephem_epoch():
     epoch = Time("2020-02-14 00:00:00")
     ephem = Ephem.from_horizons(
         "2020 CD3",
-        time_range(
-            Time("2020-02-13 12:00:00"), end=Time("2020-02-14 12:00:00")
-        ),
+        time_range(Time("2020-02-13 12:00:00"), end=Time("2020-02-14 12:00:00")),
         attractor=Earth,
     )
 
@@ -371,9 +363,7 @@ def test_plot_ephem_no_epoch():
     epoch = Time("2020-02-14 00:00:00")
     ephem = Ephem.from_horizons(
         "2020 CD3",
-        time_range(
-            Time("2020-02-13 12:00:00"), end=Time("2020-02-14 12:00:00")
-        ),
+        time_range(Time("2020-02-13 12:00:00"), end=Time("2020-02-14 12:00:00")),
         attractor=Earth,
     )
 
@@ -391,7 +381,7 @@ def test_plot_ephem_no_epoch():
 def test_body_frame_raises_warning_if_time_is_not_tdb_with_proper_time(
     recwarn,
 ):
-    from poliastro.warnings import TimeScaleWarning
+    from hapsira.warnings import TimeScaleWarning
 
     body = Jupiter
     epoch = Time("2017-09-29 07:31:26", scale="utc")
@@ -405,9 +395,7 @@ def test_body_frame_raises_warning_if_time_is_not_tdb_with_proper_time(
     assert expected_epoch_string in str(w.message)
 
 
-@pytest.mark.xfail(
-    sys.maxsize < 2**32, reason="not supported for 32 bit systems"
-)
+@pytest.mark.xfail(sys.maxsize < 2**32, reason="not supported for 32 bit systems")
 @pytest.mark.mpl_image_compare
 def test_plot_maneuver_using_matplotlib2D_backend():
     # Data from Vallado, example 6.1

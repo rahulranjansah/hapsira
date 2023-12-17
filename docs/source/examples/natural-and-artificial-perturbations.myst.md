@@ -21,27 +21,27 @@ from astropy.coordinates import solar_system_ephemeris
 from astropy.time import Time, TimeDelta
 from astropy import units as u
 
-from poliastro.bodies import Earth, Moon
-from poliastro.constants import rho0_earth, H0_earth
+from hapsira.bodies import Earth, Moon
+from hapsira.constants import rho0_earth, H0_earth
 
-from poliastro.core.elements import rv2coe
-from poliastro.core.perturbations import (
+from hapsira.core.elements import rv2coe
+from hapsira.core.perturbations import (
     atmospheric_drag_exponential,
     third_body,
     J2_perturbation,
 )
-from poliastro.core.propagation import func_twobody
-from poliastro.ephem import build_ephem_interpolant
-from poliastro.plotting import OrbitPlotter
-from poliastro.plotting.orbit.backends import Plotly3D
-from poliastro.twobody import Orbit
-from poliastro.twobody.propagation import CowellPropagator
-from poliastro.twobody.sampling import EpochsArray
-from poliastro.util import norm, time_range
+from hapsira.core.propagation import func_twobody
+from hapsira.ephem import build_ephem_interpolant
+from hapsira.plotting import OrbitPlotter
+from hapsira.plotting.orbit.backends import Plotly3D
+from hapsira.twobody import Orbit
+from hapsira.twobody.propagation import CowellPropagator
+from hapsira.twobody.sampling import EpochsArray
+from hapsira.util import norm, time_range
 ```
 
 ## Atmospheric drag ##
-The poliastro package now has several commonly used natural perturbations. One of them is atmospheric drag! See how one can monitor decay of the near-Earth orbit over time using our new module `poliastro.twobody.perturbations`!
+The hapsira package now has several commonly used natural perturbations. One of them is atmospheric drag! See how one can monitor decay of the near-Earth orbit over time using our new module `hapsira.twobody.perturbations`!
 
 ```{code-cell} ipython3
 R = Earth.R.to(u.km).value
@@ -104,7 +104,7 @@ atmosphere model than the one in `atmospheric_drag` for these sorts
 of computations.
 
 ```{code-cell} ipython3
-from poliastro.twobody.events import LithobrakeEvent
+from hapsira.twobody.events import LithobrakeEvent
 
 orbit = Orbit.circular(
     Earth, 230 * u.km, epoch=Time(0.0, format="jd", scale="tdb")
@@ -161,7 +161,7 @@ rr, vv = orbit.to_ephem(
 ).rv()
 
 # This will be easier to compute when this is solved:
-# https://github.com/poliastro/poliastro/issues/380
+# https://github.com/hapsira/hapsira/issues/380
 raans = [
     rv2coe(k, r, v)[3]
     for r, v in zip(rr.to_value(u.km), vv.to_value(u.km / u.s))
@@ -239,7 +239,7 @@ frame.plot_ephem(ephem, label="orbit influenced by Moon")
 Apart from natural perturbations, there are artificial thrusts aimed at intentional change of orbit parameters. One of such changes is simultaneous change of eccentricity and inclination:
 
 ```{code-cell} ipython3
-from poliastro.twobody.thrust import change_ecc_inc
+from hapsira.twobody.thrust import change_ecc_inc
 
 ecc_0, ecc_f = 0.4, 0.0
 a = 42164  # km

@@ -221,9 +221,7 @@ class periodic_orbit(cr3bp_model):
 
             # Update Free variable vector, include PALC constraint if PALC is being used
             if palc_args is None:
-                self.xfree = self.newton_raphson_update(
-                    self.xfree, FX, self.DF
-                )
+                self.xfree = self.newton_raphson_update(self.xfree, FX, self.DF)
             else:
                 DG[:-1, :] = self.DF
                 DG[-1, :] = palc_args[
@@ -343,9 +341,7 @@ class periodic_orbit(cr3bp_model):
                 else:
                     self.ic[self.stm_col_index] = self.xfree
 
-    def __constraints_setup_update(
-        self, constraints, results_stm, purpose="update"
-    ):
+    def __constraints_setup_update(self, constraints, results_stm, purpose="update"):
         """Computes intial xconstraint and xdesired Vector and Updates the two after computing a new xfree
         Parameters
         ----------
@@ -383,15 +379,11 @@ class periodic_orbit(cr3bp_model):
 
             # Setup/Update Constraint Vector and Desired vector, xconstraint where FX = xconstraint - xdesired
             if "jc" in constraints:
-                self.xconstraint[:-1] = results_stm["states"][
-                    -1, self.stm_row_index
-                ]
+                self.xconstraint[:-1] = results_stm["states"][-1, self.stm_row_index]
                 self.xconstraint[-1] = self.JC(self.ic)  # JC of IC
                 self.xdesired[-1] = self.JCd  # Desired JC
             else:
-                self.xconstraint = results_stm["states"][
-                    -1, self.stm_row_index
-                ]
+                self.xconstraint = results_stm["states"][-1, self.stm_row_index]
 
             # Updated desired to be inital state of orbit
             if self.sym_period_targ == 1:
@@ -550,9 +542,7 @@ class periodic_orbit(cr3bp_model):
             )
             # Account for Phase constraint with PALC
             if palc_args is not None:
-                self.DF[-1, : len(palc_args["dx/dtheta"])] = palc_args[
-                    "dx/dtheta"
-                ]
+                self.DF[-1, : len(palc_args["dx/dtheta"])] = palc_args["dx/dtheta"]
 
     def newton_raphson_update(self, xfree, FX, DG):
         """Multi-dimensional Newton-Raphson Method to update inital guess.
@@ -763,9 +753,7 @@ class periodic_orbit(cr3bp_model):
 
         if get_initial_states is False:
             local_manifold_states = np.zeros((teval_len, 6))
-            self.teval = np.linspace(0, abs(prop_time), teval_len) * np.sign(
-                prop_time
-            )
+            self.teval = np.linspace(0, abs(prop_time), teval_len) * np.sign(prop_time)
 
             int_method_orig = self.int_method
             self.int_method = "DOP853"
@@ -829,9 +817,7 @@ class periodic_orbit(cr3bp_model):
             # Obtain states at dififerent times along PO and STM(tf,0)
             int_method_orig = self.int_method
             self.int_method = "boost"
-            result_stm = self.propagate(
-                ic=po_ic, tf=tf_po_state[count_po_states]
-            )
+            result_stm = self.propagate(ic=po_ic, tf=tf_po_state[count_po_states])
 
             # eigenvect of nth invariant curve = STM(tf_i,0)*eigenvector of the first invar curve
             eigvector_tfi = np.real(
@@ -843,9 +829,7 @@ class periodic_orbit(cr3bp_model):
 
             self.int_method = int_method_orig
 
-            global_manifold_states[
-                count_po_states, :, :
-            ] = self.local_manifold_gen(
+            global_manifold_states[count_po_states, :, :] = self.local_manifold_gen(
                 dist=dist,
                 eigenvect_manifold=eigvector_tfi,
                 prop_time=prop_time,

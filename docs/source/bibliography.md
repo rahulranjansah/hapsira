@@ -5,9 +5,7 @@
 
 ## Books and papers
 
-Several books and articles are mentioned across the documentation and
-the source code itself. Here is the complete list in no particular
-order:
+Several books and articles are mentioned across the documentation and the source code itself. Here is the complete list in no particular order:
 
 - Vallado, David A., and Wayne D. McClain. *Fundamentals of
   astrodynamics and applications*. Vol. 12. Springer Science &
@@ -27,13 +25,7 @@ order:
 
 ## Software
 
-poliastro wouldn\'t be possible without the tremendous, often unpaid and
-unrecognised effort of thousands of volunteers who devote a significant
-part of their lives to provide the best software money can buy, for
-free. This is a list of direct poliastro dependencies with a citeable
-resource, which doesn\'t account for the fact that I have used and
-enjoyed free (as in freedom) operative systems, compilers, text editors,
-IDEs and browsers for my whole academic life.
+`hapsira` wouldn\'t be possible without the tremendous, often unpaid and unrecognised effort of thousands of volunteers who devote a significant part of their lives to provide the best software money can buy, for free. This is a list of direct `hapsira` dependencies with a citeable resource, which doesn\'t account for the fact `hapsira`'s developers have used and enjoyed free (as in freedom) operative systems, compilers, text editors, IDEs and browsers.
 
 - Van Der Walt, Stefan, S. Chris Colbert, and Gael Varoquaux. \"The
   NumPy array: a structure for efficient numerical computation.\"
@@ -47,5 +39,5 @@ IDEs and browsers for my whole academic life.
   interactive scientific computing.\" *Computing in Science &
   Engineering* 9, no. 3 (2007): 21-29.
   [DOI:10.1109/MCSE.2007.53](http://dx.doi.org/10.1109/MCSE.2007.53)
-- The Astropy Collaboration, A. M. Price-Whelan, B. M. Sipőcz, H. M. Günther, P. L. Lim, S. M.Crawford, S.  
+- The Astropy Collaboration, A. M. Price-Whelan, B. M. Sipőcz, H. M. Günther, P. L. Lim, S. M.Crawford, S.
 Conseil, D. L. Shupe, M. W. Craig, N. Dencheva "The Astropy Project: Building an Open-science Project and Status of the v2.0 Core Package" The Astropy Collaboration et al AJ 156 123 (2018) [DOI:10.3847/1538-3881/aabc4f](https://iopscience.iop.org/article/10.3847/1538-3881/aabc4f)

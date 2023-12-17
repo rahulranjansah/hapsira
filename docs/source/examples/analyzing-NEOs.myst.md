@@ -23,10 +23,10 @@ And what does "near" exactly mean? In terms of orbital elements, asteroids and c
 ```{code-cell} ipython3
 from astropy import time
 
-from poliastro.bodies import Earth
-from poliastro.frames import Planes
-from poliastro.plotting import OrbitPlotter
-from poliastro.twobody.orbit import Orbit
+from hapsira.bodies import Earth
+from hapsira.frames import Planes
+from hapsira.plotting import OrbitPlotter
+from hapsira.twobody.orbit import Orbit
 ```
 
 ## Small Body Database (SBDB)

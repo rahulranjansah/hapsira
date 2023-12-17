@@ -6,8 +6,8 @@ from hypothesis import example, given, settings, strategies as st
 import numpy as np
 import pytest
 
-from poliastro.examples import iss
-from poliastro.twobody.sampling import TrueAnomalyBounds, sample_closed
+from hapsira.examples import iss
+from hapsira.twobody.sampling import TrueAnomalyBounds, sample_closed
 
 angles = partial(st.floats, min_value=-2 * np.pi, max_value=2 * np.pi)
 eccentricities = partial(st.floats, min_value=0, max_value=1, exclude_max=True)
@@ -41,9 +41,7 @@ def test_sample_closed_is_always_between_minus_pi_and_pi(min_nu, ecc, max_nu):
 @settings(deadline=None)
 @given(
     min_nu=with_units(
-        elements=st.floats(
-            min_value=-np.pi, max_value=np.pi, exclude_max=True
-        ),
+        elements=st.floats(min_value=-np.pi, max_value=np.pi, exclude_max=True),
         unit=u.rad,
     ),
     ecc=eccentricities_q(),

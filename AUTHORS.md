@@ -1,11 +1,13 @@
 # Authors
 
-Originally devised and implemented by [Juan Luis Cano Rodríguez](mailto:hello@juanlu.space).
+Core developer:
 
+- [Sebastian M. Ernst](mailto:ernst@pleiszenburg.de)
 
-# Maintainers
+Contributors, in alphabetical order:
 
-poliastro is maintained thanks to:
+- (TBD)
 
-* [Juan Luis Cano Rodríguez](mailto:hello@juanlu.space)
-* [Jorge Martinez Garrido](mailto:contact@jorgemartinez.space)
+## Original Authors 2012 - 2023
+
+This project began as a fork of `poliastro`, which was implemented and maintained by [Juan Luis Cano Rodríguez](mailto:hello@juanlu.space) and [Jorge Martinez Garrido](mailto:contact@jorgemartinez.space).

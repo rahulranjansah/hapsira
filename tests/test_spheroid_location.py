@@ -2,8 +2,8 @@ from astropy import units as u
 from astropy.tests.helper import assert_quantity_allclose
 from hypothesis import given, settings, strategies as st
 
-from poliastro.bodies import Earth
-from poliastro.spheroid_location import SpheroidLocation
+from hapsira.bodies import Earth
+from hapsira.spheroid_location import SpheroidLocation
 
 
 @st.composite
@@ -110,9 +110,7 @@ def test_cartesian_conversion_approximate():
 
 @settings(deadline=None)
 @given(
-    lat=with_units(
-        elements=st.floats(min_value=-1e-2, max_value=1e-2), unit=u.rad
-    ),
+    lat=with_units(elements=st.floats(min_value=-1e-2, max_value=1e-2), unit=u.rad),
 )
 def test_h_calculation_near_lat_singularity(lat):
     body = Earth
