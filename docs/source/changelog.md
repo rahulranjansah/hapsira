@@ -1,6 +1,8 @@
 # What's new
 
-## hapsira 0.18.0 - 2023-12-XX
+## hapsira 0.18.0 - 2023-12-21
+
+**CAUTION**: A number changes at least partially **BREAK BACKWARDS COMPATIBILITY** for certain use cases.
 
 This release is a rebranded, but virtually identical fork of `poliastro`, `main` branch, as of the date of it being archived, October 14 2023. All noteworthy changes listed here were merged into `poliastro` after its last official release, `0.17.0`.
 
