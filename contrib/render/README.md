@@ -25,7 +25,7 @@ If your file downloaded from **NAIF kernel** dsk is .bds format, you might have 
 
 ### Bash Script for BDS to OBJ Conversion
 ```bash
-source linux_setup.sh
+source setup_dskexp.sh
 ```
 ```bash
 dskexp -dsk filename.bds -text filename.obj -format obj -prec 10
@@ -35,12 +35,23 @@ dskexp -dsk filename.bds -text filename.obj -format obj -prec 10
 1. **Python 3.7+**
 2. **Vispy**: Install with `pip install requirements`
 
+---
 
 ## Usage
 
 How to use this file to reproduce results or render your own:
 [example_render.py](/example_render.py)
+```python
+from vispy import app
+from scene import MainWindow
+from data_loader import load_data
 
+vertices, faces = load_data("test_data/ROS_ST_K020_OSPCLAM_U_V1.OBJ")
+main_w = MainWindow()
+main_w.set_model(vertices, faces)
+
+app.run()
+```
 ---
 
 ## Future Developments

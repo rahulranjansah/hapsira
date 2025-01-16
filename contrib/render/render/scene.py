@@ -1,8 +1,9 @@
 """@author: Rahul R. Sah, Physics and Computer Science Department, Furman University
         iamrahursah@gmail.com.
 """
-
+import numpy as np
 from vispy import scene
+from vispy import app
 from vispy.geometry import MeshData
 from vispy.scene import visuals
 
@@ -38,3 +39,11 @@ class MainWindow(scene.SceneCanvas):
         mesh = visuals.Mesh(meshdata=mesh_data, shading='smooth', color="grey")
         self.view.add(mesh)
 
+vertices = np.array([[1.0, 2.0, 3.0],
+                            [4.0, 5.0, 6.0]])
+
+faces = np.array([[2, 2, 4]])
+main_w = MainWindow()
+
+main_w.set_model(vertices, faces)
+app.run()

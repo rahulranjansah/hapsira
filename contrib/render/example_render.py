@@ -4,8 +4,8 @@
 
 # How to render using this module
 from vispy import app
-from scene import MainWindow
-from data_loader import load_data
+from render.scene import MainWindow
+from render.data_loader import load_data
 
 vertices, faces = load_data("test_data/ROS_ST_K020_OSPCLAM_U_V1.OBJ")
 main_w = MainWindow()

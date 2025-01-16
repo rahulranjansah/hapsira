@@ -1,0 +1,88 @@
+<h1 id="hapsira-3d-asteroid-and-comet-visualization">Hapsira 3D Asteroid
+and Comet Visualization</h1>
+<h2 id="overview">Overview</h2>
+<p>This enhancement adds a <strong>3D visualization feature</strong> to
+<strong>Hapsira</strong>, rendering precise models of asteroids and
+comets using <strong>SPICE Digital Shape Kernel (DSK) files</strong>.
+The visualization leverages the <strong>Vispy</strong> library for
+rendering, offering interactive exploration of shape and topography
+data. Additionally, a <strong>bash script</strong> automates the
+conversion of <code>.bds</code> files into <code>.obj</code> files using
+<code>dskexp</code> on Linux systems.</p>
+<hr />
+<h2 id="key-features">Key Features</h2>
+<h3 id="d-visualization-with-vispy">1. 3D Visualization with Vispy</h3>
+<ul>
+<li><strong>Interactive 3D Rendering</strong>: Displays 3D models of
+asteroids and comets.</li>
+<li><strong>Camera Controls</strong>: Allows zooming, rotating, and
+panning for full exploration.</li>
+<li><strong>Lighting and Shading</strong>: Enhances topographical
+detail.</li>
+</ul>
+<h3 id="dsk-export-automation">2. DSK Export Automation</h3>
+<ul>
+<li><strong>Bash Script</strong>: Automates conversion of
+<code>.bds</code> files to <code>.obj</code> files.</li>
+<li><strong>Batch Processing</strong>: Converts multiple files
+efficiently.</li>
+<li><strong>Linux Compatibility</strong>: Uses <code>dskexp</code> from
+the SPICE toolkit.</li>
+</ul>
+<hr />
+<h2 id="installation">Installation</h2>
+<p>If your file downloaded from <strong>NAIF kernel</strong> dsk is .bds
+format, you might have to convert the file into text format that is
+.obj. The dsk could be found here within files <a
+href="https://naif.jpl.nasa.gov/pub/naif/generic_kernels/">NAIF
+Kernels</a></p>
+<h3 id="bash-script-for-bds-to-obj-conversion">Bash Script for BDS to
+OBJ Conversion</h3>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> setup_dskexp.sh</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">dskexp</span> <span class="at">-dsk</span> filename.bds <span class="at">-text</span> filename.obj <span class="at">-format</span> obj <span class="at">-prec</span> 10</span></code></pre></div>
+<h3 id="prerequisite">Prerequisite</h3>
+<ol type="1">
+<li><strong>Python 3.7+</strong></li>
+<li><strong>Vispy</strong>: Install with
+<code>pip install requirements</code></li>
+</ol>
+<hr />
+<h2 id="usage">Usage</h2>
+<p>How to use this file to reproduce results or render your own: <a
+href="/example_render.py">example_render.py</a></p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> vispy <span class="im">import</span> app</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scene <span class="im">import</span> MainWindow</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> data_loader <span class="im">import</span> load_data</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>vertices, faces <span class="op">=</span> load_data(<span class="st">&quot;test_data/ROS_ST_K020_OSPCLAM_U_V1.OBJ&quot;</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>main_w <span class="op">=</span> MainWindow()</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>main_w.set_model(vertices, faces)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>app.run()</span></code></pre></div>
+<hr />
+<h2 id="future-developments">Future Developments</h2>
+<ul>
+<li><strong>Projectile Simulation of Flybys</strong>: Visualize
+spacecraft trajectories, including entry, flyby, and exit paths around
+asteroids and comets.</li>
+<li><strong>Landing and Movement Tracking</strong>: Display historical
+landing points and movement trails.</li>
+<li><strong>Saving Options</strong>: Enable users to save visualized
+models and trajectories in standard formats.</li>
+<li><strong>GIF Export</strong>: Add functionality to export animations
+of rotating objects or flybys as GIFs for presentations and
+reports.</li>
+</ul>
+<hr />
+<h2 id="about-me">About Me</h2>
+<p>I am <strong>Rahul R. Sah</strong>, an undergraduate student at
+<strong>Furman University</strong>, SC. I am passionate about
+<strong>Astronomy</strong> and <strong>Machine Learning</strong>. This
+is one of my first contributions to the <strong>open-source
+community</strong>. If there are any requirements I missed or
+improvements needed, please let me know!</p>
+<p><strong>Email</strong>: <a
+href="mailto:iamrahulrsah@gmail.com">iamrahulrsah@gmail.com</a></p>
