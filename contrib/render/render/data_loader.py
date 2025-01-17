@@ -1,5 +1,12 @@
-"""@author: Rahul R. Sah, Physics and Computer Science Department, Furman University
-        iamrahursah@gmail.com.
+"""This module provides functionality to load 3D model data from a file.
+
+The `load_data` function reads a file containing 3D model data, extracts the vertex and face
+information, and returns them as numpy arrays. The file is expected to be in a specific format
+where each line represents either a vertex or a face. Vertices are denoted by lines starting
+with 'v' and faces by lines starting with 'f'.
+
+The function uses pandas to read the file and process the data. The vertices and faces are
+extracted based on their respective identifiers and returned as numpy arrays.
 """
 
 import pandas as pd

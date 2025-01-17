@@ -1,6 +1,3 @@
-"""@author: Rahul R. Sah, Physics and Computer Science Department, Furman University
-        iamrahursah@gmail.com.
-"""
 import numpy as np
 from vispy import scene
 from vispy import app
@@ -10,6 +7,11 @@ from vispy.scene import visuals
 class MainWindow(scene.SceneCanvas):
     """
     Main window for rendering 3D models using Vispy.
+
+    This class provides a graphical interface for rendering 3D models using the Vispy library.
+    It sets up a scene canvas with interactive capabilities, allowing users to visualize and
+    interact with 3D models. The canvas includes a grid layout and a view with a turntable
+    camera for easy manipulation of the 3D scene.
 
     Parameters
     ----------
@@ -28,6 +30,9 @@ class MainWindow(scene.SceneCanvas):
         """
         Set the 3D model to be rendered.
 
+        This method takes arrays of vertices and faces, creates a mesh from them, and adds
+        the mesh to the view for rendering. The mesh is shaded smoothly and colored grey.
+
         Parameters
         ----------
         vertices : numpy.ndarray
@@ -39,11 +44,3 @@ class MainWindow(scene.SceneCanvas):
         mesh = visuals.Mesh(meshdata=mesh_data, shading='smooth', color="grey")
         self.view.add(mesh)
 
-vertices = np.array([[1.0, 2.0, 3.0],
-                            [4.0, 5.0, 6.0]])
-
-faces = np.array([[2, 2, 4]])
-main_w = MainWindow()
-
-main_w.set_model(vertices, faces)
-app.run()
