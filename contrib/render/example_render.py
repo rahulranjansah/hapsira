@@ -13,9 +13,10 @@ Usage:
 """
 
 # How to render using this module
-from vispy import app
-from render.scene import MainWindow
 from render.data_loader import load_data
+from render.scene import MainWindow
+from vispy import app
+
 
 def main():
     """
@@ -32,6 +33,7 @@ def main():
     main_w = MainWindow()
     main_w.set_model(vertices, faces)
     app.run()
+
 
 if __name__ == "__main__":
     main()

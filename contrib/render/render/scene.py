@@ -1,8 +1,7 @@
-import numpy as np
 from vispy import scene
-from vispy import app
 from vispy.geometry import MeshData
 from vispy.scene import visuals
+
 
 class MainWindow(scene.SceneCanvas):
     """
@@ -18,12 +17,13 @@ class MainWindow(scene.SceneCanvas):
     *args : tuple
         Additional arguments for the SceneCanvas.
     """
+
     def __init__(self, *args):
-        super().__init__(keys='interactive', size=(800, 600), show=True)
+        super().__init__(keys="interactive", size=(800, 600), show=True)
         self.unfreeze()
         self.grid = self.central_widget.add_grid(margin=10)
-        self.view = self.grid.add_view(row=0, col=0, camera='turntable')
-        self.view.bgcolor = 'black'
+        self.view = self.grid.add_view(row=0, col=0, camera="turntable")
+        self.view.bgcolor = "black"
         self.view.camera.fov = 60
 
     def set_model(self, vertices, faces):
@@ -41,6 +41,5 @@ class MainWindow(scene.SceneCanvas):
             Array of face indices.
         """
         mesh_data = MeshData(vertices=vertices, faces=faces)
-        mesh = visuals.Mesh(meshdata=mesh_data, shading='smooth', color="grey")
+        mesh = visuals.Mesh(meshdata=mesh_data, shading="smooth", color="grey")
         self.view.add(mesh)
-
