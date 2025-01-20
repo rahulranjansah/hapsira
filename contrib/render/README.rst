@@ -6,7 +6,6 @@ Overview
 
 This enhancement adds a **3D visualization feature** to **Hapsira**, rendering precise models of asteroids and comets using **SPICE Digital Shape Kernel (DSK) files**. The visualization leverages the **Vispy** library for rendering, offering interactive exploration of shape and topography data. Additionally, a **bash script** automates the conversion of `.bds` files into `.obj` files using `dskexp` on Linux systems.
 
----
 
 Key Features
 ------------
@@ -23,7 +22,6 @@ Key Features
    - **Batch Processing**: Converts multiple files efficiently.
    - **Linux Compatibility**: Uses `dskexp` from the SPICE toolkit.
 
----
 
 Installation
 ------------
@@ -47,7 +45,6 @@ Prerequisite
 1. **Python 3.7+**
 2. **Vispy**: Install with `pip install -r requirements.txt`
 
----
 
 Usage
 -----
@@ -67,7 +64,6 @@ How to use this file to reproduce results or render your own:
 
     app.run()
 
----
 
 Future Developments
 -------------------
@@ -77,7 +73,6 @@ Future Developments
 - **Saving Options**: Enable users to save visualized models and trajectories in standard formats.
 - **GIF Export**: Add functionality to export animations of rotating objects or flybys as GIFs for presentations and reports.
 
----
 
 About Me
 --------
