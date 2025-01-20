@@ -49,7 +49,7 @@ Prerequisite
 Usage
 -----
 
-How to use this file to reproduce results or render your own:
+How to use this file to reproduce results or render your own built using Python 3.12:
 `example_render.py <example_render.py>`_
 
 .. code-block:: python
