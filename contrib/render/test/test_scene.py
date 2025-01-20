@@ -1,5 +1,3 @@
-
-
 # Dont know how to write scene test
 def test_set_model():
     pass
