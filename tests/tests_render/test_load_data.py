@@ -2,8 +2,7 @@ from io import StringIO
 
 import numpy as np
 
-from contrib.render.render.data_loader import load_data
-
+from hapsira.render.data_loader import load_data
 
 def test_load_data():
     data = """v 1.0 2.0 3.0
