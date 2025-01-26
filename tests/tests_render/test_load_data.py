@@ -4,6 +4,7 @@ import numpy as np
 
 from hapsira.render.data_loader import load_data
 
+
 def test_load_data():
     data = """v 1.0 2.0 3.0
               v 4.0 2.0 3.0

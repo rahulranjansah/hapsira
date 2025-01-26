@@ -1,7 +1,10 @@
 import unittest
 from unittest.mock import MagicMock
+
 import numpy as np
+
 from hapsira.render.scene import MainWindow
+
 
 class TestMainWindow(unittest.TestCase):
     def test_set_model(self):
@@ -15,4 +18,3 @@ class TestMainWindow(unittest.TestCase):
 
         # asserting that view.add was called once with proper arguments
         main_w.add.assert_called_once_with(vertices, faces)
-
